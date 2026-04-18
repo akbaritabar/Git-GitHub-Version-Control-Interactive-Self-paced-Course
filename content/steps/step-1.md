@@ -13,11 +13,11 @@ A common problem in research and collaborative writing is ending up with many fi
 
 That workflow becomes hard to search, hard to merge, and hard to trust.
 
-Version control replaces that file-name chaos with a tracked history of changes.
+Version control replaces that file-name chaos with a tracked and auditable history of changes.
 
 ![Placeholder for your Word-versioning example image]({{IMAGE_BASE_URL}}/example-placeholder.svg)
 
-You can later replace that placeholder with your slide image showing messy Microsoft Word versioning.
+You can later replace that placeholder with your slide image that demonstrates the same versioning problem.
 
 ### Git and GitHub
 
@@ -33,7 +33,7 @@ That is much harder with many binary formats.
 
 ### Terminal basics
 
-You do not need to memorize everything at once, but you should recognize the role of these commands:
+You do not need to memorize everything at once, but you should recognize the role of these commands in day-to-day project work:
 
 - `pwd`: show the current working directory
 - `ls` or `dir`: list files
@@ -74,7 +74,7 @@ Many research teams also use numbered scripts or workflow tools so the order of 
 
 ### Your question for step 1
 
-Reply in this tracking issue with a short answer to this question:
+Reply in this tracking issue with a concise answer in full sentences:
 
 **What is the difference between Git and GitHub, and why might a `.gitignore` file be useful?**
 

@@ -18,7 +18,7 @@ module.exports = async function ({ github, context, core }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `🚫 Step 2 is not complete yet.\n\n${answerCheck.question.failureMessage}`
+      body: `Step 2 is not complete yet.\n\n${answerCheck.question.failureMessage}`
     });
     core.setOutput('validated', 'false');
     return;
@@ -39,9 +39,9 @@ module.exports = async function ({ github, context, core }) {
     repo: context.repo.repo,
     issue_number: context.issue.number,
     body: [
-      '🎉 Step 2 complete.',
+      'Step 2 complete.',
       '',
-      'You have completed the initial two-step version of the interactive course.',
+      'You have completed the current two-step version of this interactive course.',
       '',
       'You now have the basic logic needed for:',
       '- using Git to track project history',

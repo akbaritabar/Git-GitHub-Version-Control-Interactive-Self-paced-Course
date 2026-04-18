@@ -1,11 +1,11 @@
 ## Step 2: Forks, Remotes, Branches, and Collaboration
 
-This step moves from the basics to collaboration workflows.
+This step moves from core concepts to collaboration workflows.
 
 ### Forks
 
 A fork is your own copy of a repository on GitHub.
-It lets you experiment, learn, and contribute without directly changing the upstream repository.
+It allows you to experiment, learn, and contribute without directly changing the upstream repository.
 
 Your fork for this course is:
 
@@ -53,7 +53,7 @@ Your slides also introduce these directions for further learning:
 
 ### Next topics to learn
 
-After you finish this two-step basic course, you can continue with these advanced directions from your slides and related reproducibility practice:
+After you finish this two-step foundational course, you can continue with these advanced directions from your slides and related reproducibility practice:
 
 - workflow management with SnakeMake and Targets in R
 - GitHub Actions for recurring automation tasks
@@ -67,7 +67,7 @@ These topics help ensure that code, data, software environments, and analysis pi
 
 ### Your question for step 2
 
-Reply in this tracking issue with a short answer to this question:
+Reply in this tracking issue with a concise answer in full sentences:
 
 **Why might someone fork a repository, why might someone create a branch instead of working directly on the main branch, and name one advanced reproducibility tool or practice you want to learn next (for example SnakeMake, Docker/Podman, `renv`, `uv`, or GitHub Actions)?**
 

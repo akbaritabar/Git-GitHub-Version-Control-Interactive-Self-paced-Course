@@ -25,7 +25,7 @@ module.exports = async function ({ github, context }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `🚫 Only @${participant} can use \`/done N\` in this tracking issue.`
+      body: `Only @${participant} can use \`/done N\` in this tracking issue.`
     });
     return '-1';
   }
@@ -41,7 +41,7 @@ module.exports = async function ({ github, context }) {
         repo: context.repo.repo,
         issue_number: context.issue.number,
         body: [
-          '⚠️ Your comment mentions "done" but does not use the required format.',
+          'Your comment mentions "done" but does not use the required format.',
           '',
           `Use \`/done N\` where N is a step number between 1 and ${max}.`
         ].join('\n')
@@ -56,7 +56,7 @@ module.exports = async function ({ github, context }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `🚫 Invalid step number. Please use a number between 1 and ${max}.`
+      body: `Invalid step number. Please use a number between 1 and ${max}.`
     });
     return '-1';
   }
@@ -66,7 +66,7 @@ module.exports = async function ({ github, context }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `ℹ️ Step ${stepNumber} is already marked complete in this tracking issue.`
+      body: `Step ${stepNumber} is already marked complete in this tracking issue.`
     });
     return '-1';
   }

@@ -25,7 +25,7 @@ function loadStepMarkdown(stepNumber, variables) {
 }
 
 function loadQuestionConfig(stepNumber) {
-  const raw = readWorkspaceFile(`content/questions/step-${stepNumber}.json`);
+  const raw = readWorkspaceFile(`.course_config/questions/step-${stepNumber}.json`);
   return JSON.parse(raw);
 }
 
@@ -57,12 +57,38 @@ async function findLatestValidAnswer({ github, context, issueNumber, actor, step
     const matchesAll = question.requiredPatterns.every((pattern) => {
       return new RegExp(pattern, 'i').test(body);
     });
-    if (matchesAll) {
+    if (!matchesAll) {
+      continue;
+    }
+
+    const quality = evaluateAnswerQuality(body, question);
+    if (quality.isValid) {
       return { found: true, comment: relevant[index], question };
     }
   }
 
   return { found: false, question };
+}
+
+function evaluateAnswerQuality(body, question) {
+  const wordCount = (body.match(/\b[\p{L}\p{N}_'-]+\b/gu) || []).length;
+  const minimumWordCount = Number.isInteger(question.minimumWordCount) ? question.minimumWordCount : 0;
+
+  if (wordCount < minimumWordCount) {
+    return { isValid: false, reason: 'too_short' };
+  }
+
+  if (question.requireSentenceStructure) {
+    const hasSentenceBoundary = /[.!?]/.test(body) || body.split('\n').filter((line) => line.trim().length > 0).length >= 2;
+    const hasExplanatoryConnector = /\b(because|therefore|so that|while|instead|allows|helps|using|which|so)\b/i.test(body);
+    const hasActionVerb = /\b(is|are|use|uses|using|track|tracks|share|shares|create|creates|work|works|helps|manage|run|supports|ensures|sync|explain|means)\b/i.test(body);
+
+    if (!hasSentenceBoundary || !hasExplanatoryConnector || !hasActionVerb) {
+      return { isValid: false, reason: 'structure' };
+    }
+  }
+
+  return { isValid: true };
 }
 
 function markChecklistItem(issueBody, stepNumber) {
@@ -79,5 +105,6 @@ module.exports = {
   loadQuestionConfig,
   markChecklistItem,
   readWorkspaceFile,
-  renderTemplate
+  renderTemplate,
+  evaluateAnswerQuality
 };

@@ -21,7 +21,7 @@ module.exports = async function ({ github, context, core }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `🚫 Step 1 is not complete yet.\n\n${answerCheck.question.failureMessage}`
+      body: `Step 1 is not complete yet.\n\n${answerCheck.question.failureMessage}`
     });
     core.setOutput('validated', 'false');
     return;
@@ -46,9 +46,9 @@ module.exports = async function ({ github, context, core }) {
 
   const nextStep = helpers.loadStepMarkdown(2, variables);
   const body = [
-    '🎉 Step 1 complete.',
+    'Step 1 complete.',
     '',
-    'Your answer covered the foundations well. Step 2 is now unlocked.',
+    'Your answer demonstrates the foundational concepts clearly. Step 2 is now unlocked.',
     '',
     nextStep
   ].join('\n');

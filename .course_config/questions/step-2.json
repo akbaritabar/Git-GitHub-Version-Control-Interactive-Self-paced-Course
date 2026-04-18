@@ -8,5 +8,7 @@
     "experiment|feature|separate|parallel|without affecting|without changing|review|main branch",
     "snakemake|snake ?make|targets|github actions|docker|podman|container|renv|\\buv\\b|osf|zenodo"
   ],
-  "failureMessage": "I could not yet find a complete step 2 answer from you. Before using `/done 2`, add a short comment that explains forks and branches, and mention at least one advanced reproducibility topic you want to learn next (for example SnakeMake, Docker/Podman, renv, uv, or GitHub Actions)."
+  "minimumWordCount": 24,
+  "requireSentenceStructure": true,
+  "failureMessage": "Your step 2 answer is not complete yet. Please write 2 to 5 full sentences that explain forks and branches and mention one advanced reproducibility topic you want to learn next."
 }

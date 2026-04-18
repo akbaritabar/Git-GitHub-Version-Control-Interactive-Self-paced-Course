@@ -13,7 +13,7 @@ jobs:
           sparse-checkout: |
             .github/scripts
             content/steps
-            content/questions
+            .course_config/questions
             images
           sparse-checkout-cone-mode: false
 

@@ -9,5 +9,7 @@
     "gitignore|\\.gitignore|ignore",
     "untracked|generated|temporary|secret|log|machine"
   ],
-  "failureMessage": "I could not yet find a complete step 1 answer from you. Before using `/done 1`, add a short comment that explains the difference between Git and GitHub and mentions why `.gitignore` is useful."
+  "minimumWordCount": 20,
+  "requireSentenceStructure": true,
+  "failureMessage": "Your step 1 answer is not complete yet. Please write 2 to 4 full sentences that explain the difference between Git and GitHub and why .gitignore is useful."
 }

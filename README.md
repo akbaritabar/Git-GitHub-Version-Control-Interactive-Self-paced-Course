@@ -25,11 +25,11 @@ This README describes only the current two-step version.
 ## Repository structure
 
 - `content/steps/` contains the lesson text for step 1 and step 2.
-- `content/questions/` contains the answer checks for step 1 and step 2.
 - `images/` contains images that can be embedded in lesson markdown.
 - `.github/workflows/` contains the automation.
 - `.github/scripts/` contains the routing and validation logic.
+- `.instructor_documents/` contains instructor and maintenance documentation.
 
 ## Private testing note
 
-This course can be tested in a private repository if private forking is allowed and collaborators have access to the upstream repository. See `authoring.md` for the main caveats and required settings.
+This course can be tested in a private repository if private forking is allowed and collaborators have access to the upstream repository. For maintainer caveats and settings, see the instructor documentation in `.instructor_documents/`.
