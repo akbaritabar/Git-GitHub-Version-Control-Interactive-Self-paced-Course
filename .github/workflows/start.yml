@@ -47,7 +47,7 @@ jobs:
               `Fork sha: \`${forkSha}\``,
               '',
               'This issue tracks your progress through the course.',
-              'Answer each step question in a normal comment, then use the matching `/done N` command to ask the workflow to check your answer.',
+              'Answer each step question in a normal comment, then use exactly this format: `/done N` where N is the step number, to ask the workflow to check your answer. Please do not edit the two following lines and start your replies in a new comment below after you have read the content and attempted the question. The workflow will reply in the same thread with feedback and next steps.',
               '',
               '- [ ] 1. Git, GitHub, and version control basics',
               '- [ ] 2. Forks, remotes, branches, and collaboration'
