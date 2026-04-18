@@ -72,5 +72,6 @@ Reply in this tracking issue with a concise answer in full sentences:
 **Why might someone fork a repository, why might someone create a branch instead of working directly on the main branch, and name one advanced reproducibility tool or practice you want to learn next (for example SnakeMake, Docker/Podman, `renv`, `uv`, or GitHub Actions)?**
 
 When you have answered, comment `/done 2` in this same tracking issue.
+You may include your answer and the `/done 2` command in the same comment, or post them as two separate comments.
 
 Tracking issue: {{TRACKING_ISSUE_URL}}

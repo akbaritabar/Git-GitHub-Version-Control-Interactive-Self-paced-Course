@@ -7,7 +7,7 @@
     "version control|history|track",
     "host|platform|remote|share|collaborat",
     "gitignore|\\.gitignore|ignore",
-    "untracked|generated|temporary|secret|log|machine"
+    "untracked|tracked|generated|temporary|secret|log|machine|exclud|omit"
   ],
   "minimumWordCount": 20,
   "requireSentenceStructure": true,

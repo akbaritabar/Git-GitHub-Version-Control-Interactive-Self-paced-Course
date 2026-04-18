@@ -79,5 +79,6 @@ Reply in this tracking issue with a concise answer in full sentences:
 **What is the difference between Git and GitHub, and why might a `.gitignore` file be useful?**
 
 When you have answered, comment `/done 1` in this same tracking issue.
+You may include your answer and the `/done 1` command in the same comment, or post them as two separate comments.
 
 Tracking issue: {{TRACKING_ISSUE_URL}}

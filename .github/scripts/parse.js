@@ -19,26 +19,33 @@ module.exports = async function ({ github, context }) {
   }
 
   const max = Math.max(...allNumbers);
-  const trimmed = (context.payload.comment.body || '').trim();
+  const commentBody = context.payload.comment.body || '';
 
-  // Step 1: Check whether this comment is a /done N command.
-  // This check must come first to avoid posting bot messages in response to
-  // ordinary comments (including bot-posted messages), which would create a
-  // feedback loop where bot messages containing "done" re-trigger the workflow.
-  const commandMatch = /^\/done\s+(\d+)$/i.exec(trimmed);
+  // Step 1: Check whether this comment contains a /done N command.
+  // We look for /done N as a standalone line anywhere in the comment, which
+  // allows students to include both their written answer and the command in
+  // one comment without the command being silently ignored.
+  // Bot-posted messages never contain /done N on its own line, so extracting
+  // it line-by-line is safe and does not create feedback loops.
+  const commandLine = commentBody
+    .split('\n')
+    .map((l) => l.trim())
+    .find((l) => /^\/done\s+\d+$/i.test(l)) || '';
+  const commandMatch = /^\/done\s+(\d+)$/i.exec(commandLine);
 
   if (!commandMatch) {
-    // The comment is not a /done N command.
-    // Only send a format hint to the registered participant. Never reply to
-    // comments from other users or to multi-line messages (which are likely
-    // answer drafts or bot-posted content, not intended commands).
+    // The comment does not contain a /done N command on its own line.
+    // Only send a format hint to the registered participant, and only for
+    // single-line comments that look like a misformatted attempt.
+    // Never reply to ordinary answer comments or to bot-posted messages.
     const earlyParticipantMatch = body.match(/^Participant:\s*`([^`]+)`\s*$/m);
     const earlyParticipant = earlyParticipantMatch ? earlyParticipantMatch[1] : null;
     const actorIsParticipant =
       earlyParticipant &&
       context.actor.toLowerCase() === earlyParticipant.toLowerCase();
 
-    if (actorIsParticipant && /done/i.test(trimmed) && !trimmed.includes('\n')) {
+    const isSingleLine = !commentBody.trim().includes('\n');
+    if (actorIsParticipant && /done/i.test(commentBody) && isSingleLine) {
       await github.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
