@@ -104,9 +104,9 @@ The course stores important information in the body of your tracking issue (part
 1. Contact your instructor and explain what happened
 2. The instructor can look at the issue's edit history (click the pencil icon on the issue body → "edited N minutes ago") and manually restore the original content
 3. The metadata lines that must be preserved are:
-   - `Participant: \`username\``
-   - `Fork repo: \`owner/repo\``
-   - `Fork sha: \`sha\``
-   - `Enrollment issue: #N`
-   - `Fork archive: <url or disabled>`
+   - Participant: `\username\`
+   - Fork repo: `\owner/repo\`
+   - Fork sha: `\sha\`
+   - Enrollment issue: `#N`
+   - Fork archive: `<url or disabled>`
    - The two checklist lines starting with `- [ ]` or `- [x]`
