@@ -206,7 +206,7 @@ jobs:
                 '',
                 '### How to enable Issues in your fork',
                 '',
-                `1. Go to your fork: **https://github.com/${forkOwner}/${forkName}**`,
+                `1. Go to your fork: **https://github.com/${forkOwner}/${forkName}** (open in a new tab so that once done you can continue the interactive course)`,
                 '2. Click the **Settings** tab at the top of the repository page',
                 '3. Scroll down to the **Features** section',
                 '4. Check the box next to **Issues**',

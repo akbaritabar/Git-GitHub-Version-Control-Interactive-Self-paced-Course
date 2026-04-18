@@ -16,7 +16,7 @@ The most common reason is that **Issues are not enabled in your fork**. GitHub t
 
 **How to enable Issues in your fork:**
 
-1. Go to your fork on GitHub — the URL looks like:
+1. Go to your fork on GitHub — the URL looks like (open in a new tab so that once done you can continue the interactive course):
    `https://github.com/YOUR_USERNAME/YOUR_FORK_NAME`
 2. Click the **Settings** tab at the top of the repository page
 3. Scroll down until you see the **Features** section
@@ -44,7 +44,7 @@ The cleanest way to recover is to **delete your fork and fork the repository aga
 
 > ⚠️ **This permanently deletes your fork.** Any changes you committed to your fork will be lost. Make sure you have not stored anything important there before continuing.
 
-1. Go to your fork on GitHub:
+1. Go to your fork on GitHub (open in a new tab so that once done you can continue the interactive course):
    `https://github.com/YOUR_USERNAME/YOUR_FORK_NAME`
 2. Click the **Settings** tab at the top
 3. Scroll all the way to the bottom of the page — this section is called the **Danger Zone**
