@@ -96,19 +96,26 @@ The checker scans participant comments in reverse order and uses the latest answ
 
 ## Required secret
 
-For the current two-step version, only one secret is required in your upstream course repository:
+For the current two-step version, only one secret is required in your upstream course repository.
 
-- `GH_PAT_CROSSREPO`
+### Step 1 — Create a Personal Access Token (classic)
 
-Path in GitHub UI:
+1. Go to your GitHub account: Settings (top-right avatar) -> Developer settings -> Personal access tokens -> Tokens (classic) -> Generate new token (classic).
+2. Give it a descriptive note, for example: `course-crossrepo`.
+3. Set the expiration to a date that covers your course period (or "No expiration" for a permanent token).
+4. Under "Select scopes", check **`repo`** (the full `repo` scope, not just `public_repo`).
+   - `repo` is required for both public and private upstream repositories.
+   - If you only check `public_repo`, the token cannot create issues or comments in private repositories and the workflow will fail with `Bad credentials`.
+5. Click "Generate token" and copy the token value immediately. GitHub will not show it again.
 
-- `Settings`
-- `Secrets and variables`
-- `Actions`
-- `New repository secret`
+### Step 2 — Add the token as a repository secret
 
-For a public repository, a classic token with `public_repo` is usually enough.
-For private testing, use `repo` access.
+1. Go to your upstream course repository on GitHub.
+2. Settings -> Secrets and variables -> Actions -> New repository secret.
+3. Set the name to exactly: `GH_PAT_CROSSREPO`
+   - The name must match exactly, including capitalisation. The workflows reference `${{ secrets.GH_PAT_CROSSREPO }}` by this exact name.
+4. Paste the token value you copied in Step 1.
+5. Click "Add secret".
 
 ## GitHub settings instructors should verify
 
