@@ -2,9 +2,11 @@
 
 This repository contains the current two-step version of a self-paced interactive course on Git, GitHub, version control, and reproducible collaboration.
 
-The course structure and automation pattern are adapted from the repro-collab workshop by Aaron Peikert and collaborators. Replace this sentence with the final upstream repository URL or attribution wording you want to publish.
+The course structure and automation pattern are adapted from the repro-collab workshop by Aaron Peikert and collaborators in [https://github.com/aaronpeikert/repro-collab](https://github.com/aaronpeikert/repro-collab). 
 
-At the moment, this scaffold includes only step 1 and step 2.
+The content of the course is coming from my previous course on Git, GitHub, and version control that could be accessed here: [https://github.com/akbaritabar/Using-Git-and-GitHub-for-Open-Science-Workshop](https://github.com/akbaritabar/Using-Git-and-GitHub-for-Open-Science-Workshop)
+
+
 
 ## How the course starts
 
