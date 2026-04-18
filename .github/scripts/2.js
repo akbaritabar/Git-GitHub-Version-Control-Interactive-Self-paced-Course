@@ -3,6 +3,9 @@ const helpers = require('./github-helpers.js');
 module.exports = async function ({ github, context, core }) {
   const issue = context.payload.issue;
   const issueBody = issue.body || '';
+  const forkMatch = issueBody.match(/Fork repo:\s*`([^`]+)`/);
+  const forkRepo = forkMatch ? forkMatch[1] : '';
+  const defaultBranch = context.payload.repository.default_branch;
 
   const answerCheck = await helpers.findLatestValidAnswer({
     github,
@@ -54,6 +57,74 @@ module.exports = async function ({ github, context, core }) {
       'Well done.'
     ].join('\n')
   });
+
+  // === Attempt to archive step 2 teaching content in fork ===
+  const variables = helpers.buildTemplateVariables({
+    context,
+    forkRepo,
+    trackingIssueUrl: issue.html_url,
+    participant: context.actor,
+    defaultBranch
+  });
+
+  try {
+    const archiveMatch = issueBody.match(/Fork archive:\s*(\S+)/);
+    const archiveUrl = archiveMatch ? archiveMatch[1] : null;
+    if (archiveUrl && archiveUrl !== 'disabled' && archiveUrl !== 'pending') {
+      const urlMatch = archiveUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
+      if (urlMatch) {
+        const [, archiveOwner, archiveRepo, archiveIssueStr] = urlMatch;
+        const stepContent = helpers.loadStepMarkdown(2, variables);
+        const teachingContent = helpers.extractTeachingContent(stepContent);
+        const completionDate = new Date().toISOString().slice(0, 10);
+        await helpers.createComment({
+          github,
+          owner: archiveOwner,
+          repo: archiveRepo,
+          issue_number: parseInt(archiveIssueStr, 10),
+          body: [
+            '## Step 2 — Forks, Remotes, Branches, and Collaboration',
+            '',
+            `*Archived from your course tracking issue: ${issue.html_url}*`,
+            `*Step 2 completed: ${completionDate}*`,
+            '',
+            '---',
+            '',
+            teachingContent,
+            '',
+            '---',
+            '',
+            '**Course complete.** All step materials are now archived in this issue for your personal reference.'
+          ].join('\n')
+        });
+      }
+    }
+  } catch (archiveErr) {
+    core.warning(`Could not write step 2 to fork archive: ${archiveErr.message}`);
+  }
+
+  // === Close enrollment issue ===
+  try {
+    const enrollmentMatch = issueBody.match(/Enrollment issue:\s*#(\d+)/);
+    if (enrollmentMatch) {
+      const enrollmentNumber = parseInt(enrollmentMatch[1], 10);
+      await github.rest.issues.createComment({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: enrollmentNumber,
+        body: `@${context.actor} has successfully completed the Git/GitHub interactive course. This enrollment record is now closed.`
+      });
+      await github.rest.issues.update({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: enrollmentNumber,
+        state: 'closed',
+        state_reason: 'completed'
+      });
+    }
+  } catch (enrollErr) {
+    core.warning(`Could not close enrollment issue: ${enrollErr.message}`);
+  }
 
   core.setOutput('validated', 'true');
 };

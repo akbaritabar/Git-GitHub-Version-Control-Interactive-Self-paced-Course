@@ -52,12 +52,17 @@ async function findLatestValidAnswer({ github, context, issueNumber, actor, step
     .filter((comment) => comment.user && comment.user.login === actor)
     .filter((comment) => !/^\/done\s+\d+$/i.test(comment.body.trim()));
 
+  const minRequired = Number.isInteger(question.minimumRequiredPatterns)
+    ? question.minimumRequiredPatterns
+    : question.requiredPatterns.length;
+
   for (let index = relevant.length - 1; index >= 0; index -= 1) {
     const body = relevant[index].body || '';
-    const matchesAll = question.requiredPatterns.every((pattern) => {
+    const matchCount = question.requiredPatterns.filter((pattern) => {
       return new RegExp(pattern, 'i').test(body);
-    });
-    if (!matchesAll) {
+    }).length;
+
+    if (matchCount < minRequired) {
       continue;
     }
 
@@ -80,15 +85,20 @@ function evaluateAnswerQuality(body, question) {
 
   if (question.requireSentenceStructure) {
     const hasSentenceBoundary = /[.!?]/.test(body) || body.split('\n').filter((line) => line.trim().length > 0).length >= 2;
-    const hasExplanatoryConnector = /\b(because|therefore|so that|while|instead|allows|helps|using|which|so)\b/i.test(body);
-    const hasActionVerb = /\b(is|are|use|uses|using|track|tracks|share|shares|create|creates|work|works|helps|manage|run|supports|ensures|sync|explain|means)\b/i.test(body);
+    const hasActionVerb = /\b(is|are|was|were|be|use|uses|using|used|track|tracks|tracking|save|saves|saving|record|records|store|stores|share|shares|create|creates|work|works|help|helps|manage|run|support|supports|ensure|ensures|sync|syncs|explain|means|mean|keep|keeps|host|hosts|allow|allows|enable|enables|tell|tells|prevent|prevents|give|gives|contain|contains|list|lists|mark|marks|specify|specifies|describe|describes|let|lets|upload|push|pull|show|shows|connect|connects|provide|provides|make|makes|point|points)\b/i.test(body);
 
-    if (!hasSentenceBoundary || !hasExplanatoryConnector || !hasActionVerb) {
+    if (!hasSentenceBoundary || !hasActionVerb) {
       return { isValid: false, reason: 'structure' };
     }
   }
 
   return { isValid: true };
+}
+
+function extractTeachingContent(markdown) {
+  const markerIndex = markdown.search(/^### Your question for step/im);
+  if (markerIndex === -1) return markdown.trim();
+  return markdown.slice(0, markerIndex).trim();
 }
 
 function markChecklistItem(issueBody, stepNumber) {
@@ -100,6 +110,7 @@ module.exports = {
   buildTemplateVariables,
   createComment,
   createIssue,
+  extractTeachingContent,
   findLatestValidAnswer,
   loadStepMarkdown,
   loadQuestionConfig,

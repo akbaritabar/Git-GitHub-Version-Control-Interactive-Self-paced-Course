@@ -74,11 +74,13 @@ Many research teams also use numbered scripts or workflow tools so the order of 
 
 ### Your question for step 1
 
-Reply in this tracking issue with a concise answer in full sentences:
+Please reply in this tracking issue with **2–4 full sentences in your own words**:
 
 **What is the difference between Git and GitHub, and why might a `.gitignore` file be useful?**
 
-When you have answered, comment `/done 1` in this same tracking issue.
-You may include your answer and the `/done 1` command in the same comment, or post them as two separate comments.
+Write as if you were explaining it to a colleague who has never used version control.
+There is no need to quote or copy from the materials above — your own words are what matter.
+
+When you have answered, add `/done 1` to the same comment or in a new comment below.
 
 Tracking issue: {{TRACKING_ISSUE_URL}}

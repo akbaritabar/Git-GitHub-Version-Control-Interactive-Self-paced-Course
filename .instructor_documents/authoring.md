@@ -32,6 +32,49 @@ In practice, this means a simple list of isolated keywords should fail more ofte
 - `.github/scripts/parse.js`
 - `.github/scripts/github-helpers.js`
 
+## Three-object design
+
+When a participant forks the repository, three GitHub objects are created automatically:
+
+### Object 1 — Enrollment record (upstream, instructor dashboard)
+
+- **Title:** `[Enrollment] @username`
+- **Label:** `enrollment`
+- **Purpose:** Tracks who has joined the course. Instructors can filter by the `enrollment` label to see all active participants. Automatically closed by `2.js` when the participant finishes.
+- **Body:** Includes a prominent redirect message in case the participant opens it by accident, with a direct link to their personal tracking issue.
+
+### Object 2 — Course tracking issue (upstream, student-facing)
+
+- **Title:** `@username started the Git/GitHub interactive course`
+- **Label:** `new_participant`
+- **Purpose:** The student's active course workspace. All `/done N` commands are posted here. The `continue.yml` workflow filters by the `new_participant` label.
+- **Metadata lines in body (do not edit):**
+  - `Participant: \`username\``
+  - `Fork repo: \`owner/repo\``
+  - `Fork sha: \`sha\``
+  - `Enrollment issue: #N`
+  - `Fork archive: <url|disabled>`
+- **First comment:** Instructions to enable Issues in the fork (with image placeholder), plus status of the fork archive.
+- **Second comment:** Step 1 teaching content and question.
+
+### Object 3 — Fork archive issue (student's fork, personal reference)
+
+- **Title:** `Course Materials Archive — Git/GitHub Interactive Course`
+- **Purpose:** A personal copy of course materials that the student keeps in their fork. Teaching content (not assessment questions) is added as comments after each step is completed.
+- **Created by:** `start.yml`, if Issues are enabled in the fork at the time of forking.
+- **If Issues are disabled:** The course continues normally. The tracking issue body records `Fork archive: disabled`. Students who enable Issues later can contact the instructor to have the archive created retroactively (manually).
+- **Step 1 content added by:** `1.js`, after a valid `/done 1` answer is accepted.
+- **Step 2 content added by:** `2.js`, after a valid `/done 2` answer is accepted.
+- **All fork writes are wrapped in try/catch.** A failure to write to the fork archive never blocks the upstream course flow.
+
+### Fork archive image placeholder
+
+`images/fork-issues-enable-placeholder.svg` is a placeholder for a screenshot showing students where to enable Issues in their fork settings.
+
+To replace it with your own screenshot:
+1. Add your image file to the `images/` folder (for example `images/fork-issues-enable.png`).
+2. In `start.yml`, find the line referencing `fork-issues-enable-placeholder.svg` and update the filename to match your new image.
+
 ## How to extend the course to step 3 and beyond
 
 Use this checklist each time you add a new step:
@@ -61,9 +104,10 @@ If you add many steps, keep one script per step (`N.js`) so each checkpoint stay
 
 Each question file includes:
 
-- `requiredPatterns`: all patterns must match the same participant answer comment.
+- `requiredPatterns`: regex patterns to match against participant answers.
+- `minimumRequiredPatterns`: how many of the `requiredPatterns` must match (optional — defaults to all of them). Setting this to one less than the total number of patterns gives students flexibility to miss one concept while still demonstrating understanding.
 - `minimumWordCount`: minimum number of words expected in the answer.
-- `requireSentenceStructure`: if true, the answer must look like normal explanatory writing.
+- `requireSentenceStructure`: if true, the answer must contain a sentence boundary (period, exclamation mark, question mark, or multiple non-empty lines) and at least one action verb. This encourages full explanatory sentences over bare keyword lists.
 - `failureMessage`: response shown when validation fails.
 
 The checker scans participant comments in reverse order and uses the latest answer that satisfies all checks.
@@ -75,11 +119,14 @@ The checker scans participant comments in reverse order and uses the latest answ
   "step": 1,
   "prompt": "Question text",
   "requiredPatterns": ["regex1", "regex2"],
+  "minimumRequiredPatterns": 5,
   "minimumWordCount": 20,
   "requireSentenceStructure": true,
   "failureMessage": "What to tell participants when answer validation fails."
 }
 ```
+
+Omit `minimumRequiredPatterns` to require all patterns to match (strictest setting).
 
 ## Markdown placeholders in step files
 
@@ -88,6 +135,16 @@ The checker scans participant comments in reverse order and uses the latest answ
 - `{{IMAGE_BASE_URL}}`
 - `{{UPSTREAM_REPO}}`
 - `{{PARTICIPANT}}`
+
+## Teaching content vs question section
+
+Each step file is split into two parts at the `### Your question for step N` heading:
+
+- Everything **before** that heading is teaching content.
+- Everything **from** that heading onward is the assessment question.
+
+The `extractTeachingContent()` helper in `github-helpers.js` performs this split.
+Only the teaching portion is archived to the student's fork. The assessment question stays only in the upstream tracking issue.
 
 ## Participant progression guardrails
 
@@ -136,7 +193,14 @@ In addition to adding the required secret, check these repository settings:
     fork event fires, the tracking issue is created without it and the course
     will never advance, with no visible error.
   - Create the label once, before your first test fork.
-4. Forking policy for private testing
+5. Create the `enrollment` label in the upstream repository
+  - Go to Issues -> Labels -> New label.
+  - Set the name to exactly: `enrollment`
+  - This label is applied to the enrollment record issue (Object 1 in the
+    three-object design). Instructors can filter by this label to see all
+    active and completed participants. The course does not break if this
+    label is missing, but the enrollment issue will have no label.
+  - Create it once, before your first test fork.
   - In the upstream private repository: Settings -> General -> Features section.
   - Enable "Allow forking" so collaborators can fork the private repository.
   - Individual GitHub accounts can fork private repositories when this setting
@@ -144,7 +208,7 @@ In addition to adding the required secret, check these repository settings:
     a GitHub organization for this to work.
   - The `fork` event fires in the upstream repository when a collaborator forks
     it, triggering `start.yml` and creating the tracking issue as expected.
-5. Collaborator access for private testing
+6. Collaborator access for private testing
   - Add each test participant as a collaborator in the upstream repository
     (Settings -> Collaborators) before they fork and start the course.
   - Without collaborator access they cannot fork a private repository, comment

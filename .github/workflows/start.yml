@@ -18,7 +18,7 @@ jobs:
             .course_config/questions
           sparse-checkout-cone-mode: false
 
-      - name: Create upstream tracking issue
+      - name: Create enrollment issue, tracking issue, and fork archive
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GH_PAT_CROSSREPO }}
@@ -36,8 +36,48 @@ jobs:
               ref: `heads/${forkInfo.data.default_branch}`
             });
             const forkSha = defaultRef.data.object.sha;
+            const upstreamRepo = `${context.repo.owner}/${context.repo.repo}`;
+            const imageBaseUrl = `https://raw.githubusercontent.com/${upstreamRepo}/${defaultBranch}/images`;
 
-            const issueBody = [
+            // === Object 1: Enrollment record in upstream (instructor dashboard) ===
+            const enrollmentBodyInitial = [
+              `## Course Enrollment: @${participant}`,
+              '',
+              `@${participant} has started the interactive Git and GitHub course.`,
+              '',
+              `- **GitHub profile:** https://github.com/${participant}`,
+              `- **Fork:** https://github.com/${forkOwner}/${forkName}`,
+              '',
+              '---',
+              '',
+              '> **⚠️ Are you a course participant who found this issue?**',
+              '>',
+              '> This is an automatic enrollment record. **Your interactive course is not here.**',
+              '>',
+              `> Your personal course tracking issue is titled: **\`@${participant} started the Git/GitHub interactive course\`**`,
+              '>',
+              '> Please make sure the username in that issue title matches **your own** GitHub username.',
+              '> Different participants each have their own separate issue — do not interact with someone else\'s.',
+              '>',
+              '> **Direct link to your course:** *(will be added in a moment)*',
+              '',
+              '---',
+              '',
+              `This enrollment record will be automatically closed when @${participant} completes the course.`,
+            ].join('\n');
+
+            const enrollmentIssue = await helpers.createIssue({
+              github,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Enrollment] @${participant}`,
+              body: enrollmentBodyInitial,
+              labels: ['enrollment']
+            });
+            const enrollmentNumber = enrollmentIssue.data.number;
+
+            // === Object 2: Course tracking issue in upstream (student-facing) ===
+            const trackingBody = [
               `Hi @${participant}!`,
               '',
               'Welcome to the interactive Git and GitHub course.',
@@ -45,27 +85,125 @@ jobs:
               `Participant: \`${participant}\``,
               `Fork repo: \`${forkRepo}\``,
               `Fork sha: \`${forkSha}\``,
+              `Enrollment issue: #${enrollmentNumber}`,
+              `Fork archive: pending`,
               '',
               'This issue tracks your progress through the course.',
-              'Answer each step question in a normal comment, then use exactly this format: `/done N` where N is the step number, to ask the workflow to check your answer. Please do not edit the two following lines and start your replies in a new comment below after you have read the content and attempted the question. The workflow will reply in the same thread with feedback and next steps.',
+              'Post your answer and the `/done N` command in a comment to advance. The workflow will reply with feedback and the next step.',
               '',
               '- [ ] 1. Git, GitHub, and version control basics',
               '- [ ] 2. Forks, remotes, branches, and collaboration'
             ].join('\n');
 
-            const issue = await helpers.createIssue({
+            const trackingIssue = await helpers.createIssue({
               github,
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `@${participant} started the Git/GitHub interactive course`,
-              body: issueBody,
+              body: trackingBody,
               labels: ['new_participant']
             });
+            const trackingIssueNumber = trackingIssue.data.number;
+            const trackingIssueUrl = trackingIssue.data.html_url;
 
+            // Update enrollment issue body with actual tracking issue URL
+            const enrollmentBodyFinal = enrollmentBodyInitial.replace(
+              '> **Direct link to your course:** *(will be added in a moment)*',
+              `> **→ Direct link to your course: ${trackingIssueUrl}**`
+            );
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: enrollmentNumber,
+              body: enrollmentBodyFinal
+            });
+
+            // === Object 3: Fork archive issue (attempt with graceful failure) ===
+            let forkArchiveUrl = 'disabled';
+            try {
+              const forkRepoData = await github.rest.repos.get({ owner: forkOwner, repo: forkName });
+              if (forkRepoData.data.has_issues) {
+                const archiveBody = [
+                  '# Course Materials Archive — Git/GitHub Interactive Course',
+                  '',
+                  'This issue is a personal archive of your course materials.',
+                  '',
+                  `**Source:** Your course tracking issue: ${trackingIssueUrl}`,
+                  '',
+                  'Teaching content from each step will be added here as you complete it.',
+                  'You can return to this issue at any time to review what you learned.',
+                  '',
+                  '---',
+                  '',
+                  '*Your active course interaction takes place in the upstream repository. This archive is for your personal reference.*'
+                ].join('\n');
+                const archiveIssue = await github.rest.issues.create({
+                  owner: forkOwner,
+                  repo: forkName,
+                  title: 'Course Materials Archive — Git/GitHub Interactive Course',
+                  body: archiveBody
+                });
+                forkArchiveUrl = archiveIssue.data.html_url;
+              }
+            } catch (err) {
+              core.warning(`Could not create fork archive issue: ${err.message}`);
+            }
+
+            // Update tracking issue body: replace "Fork archive: pending" with actual value
+            const updatedTrackingBody = trackingBody.replace(
+              'Fork archive: pending',
+              `Fork archive: ${forkArchiveUrl}`
+            );
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: trackingIssueNumber,
+              body: updatedTrackingBody
+            });
+
+            // === Comment 1: Issues activation instructions ===
+            const archiveStatus = forkArchiveUrl !== 'disabled'
+              ? `Your personal archive issue was created: ${forkArchiveUrl}`
+              : 'Your personal archive issue was not created yet — enable Issues first (see instructions below), then contact your instructor if you want it created retroactively.';
+
+            await helpers.createComment({
+              github,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: trackingIssueNumber,
+              body: [
+                '---',
+                '',
+                '## Enable Issues in Your Fork to Receive a Personal Archive',
+                '',
+                'As you complete each step, the course saves a copy of the teaching materials in an issue on **your own fork**.',
+                'This gives you a personal archive to refer back to later.',
+                '',
+                'For this to work, Issues must be enabled in **your fork** (not in this repository).',
+                '',
+                '### How to enable Issues in your fork',
+                '',
+                `1. Go to your fork: **https://github.com/${forkOwner}/${forkName}**`,
+                '2. Click the **Settings** tab at the top of the repository page',
+                '3. Scroll down to the **Features** section',
+                '4. Check the box next to **Issues**',
+                '',
+                `![Screenshot: enabling Issues in fork settings](${imageBaseUrl}/fork-issues-enable-placeholder.svg)`,
+                '',
+                `> **Status:** ${archiveStatus}`,
+                '',
+                '**You can enable Issues now or at any time before finishing the course.**',
+                'Your progress in this tracking issue is not affected either way.',
+                '',
+                '---',
+              ].join('\n')
+            });
+
+            // === Comment 2: Step 1 teaching content ===
             const variables = helpers.buildTemplateVariables({
               context,
               forkRepo,
-              trackingIssueUrl: issue.data.html_url,
+              trackingIssueUrl,
               participant,
               defaultBranch
             });
@@ -75,9 +213,9 @@ jobs:
               github,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: issue.data.number,
+              issue_number: trackingIssueNumber,
               body: [
-                'Course setup complete. Step 1 is ready below.',
+                'Step 1 materials are ready below.',
                 '',
                 stepOne
               ].join('\n')

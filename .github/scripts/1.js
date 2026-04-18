@@ -61,5 +61,45 @@ module.exports = async function ({ github, context, core }) {
     body
   });
 
+  // === Attempt to archive step 1 teaching content in fork ===
+  try {
+    const archiveMatch = issueBody.match(/Fork archive:\s*(\S+)/);
+    const archiveUrl = archiveMatch ? archiveMatch[1] : null;
+    if (archiveUrl && archiveUrl !== 'disabled' && archiveUrl !== 'pending') {
+      const urlMatch = archiveUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
+      if (urlMatch) {
+        const [, archiveOwner, archiveRepo, archiveIssueStr] = urlMatch;
+        const stepContent = helpers.loadStepMarkdown(1, variables);
+        const teachingContent = helpers.extractTeachingContent(stepContent);
+        const completionDate = new Date().toISOString().slice(0, 10);
+        await helpers.createComment({
+          github,
+          owner: archiveOwner,
+          repo: archiveRepo,
+          issue_number: parseInt(archiveIssueStr, 10),
+          body: [
+            '## Step 1 — Git, GitHub, and Version Control Basics',
+            '',
+            `*Archived from your course tracking issue: ${issue.html_url}*`,
+            `*Step 1 completed: ${completionDate}*`,
+            '',
+            '---',
+            '',
+            teachingContent
+          ].join('\n')
+        });
+      }
+    }
+  } catch (archiveErr) {
+    core.warning(`Could not write step 1 to fork archive: ${archiveErr.message}`);
+    await helpers.createComment({
+      github,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      issue_number: context.issue.number,
+      body: '> **Note:** Could not save step 1 materials to your fork archive. If you have enabled Issues in your fork, please let your instructor know. Your course progress is not affected.'
+    });
+  }
+
   core.setOutput('validated', 'true');
 };

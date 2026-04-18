@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="200" viewBox="0 0 700 200">
+  <rect width="700" height="200" fill="#f6f8fa" rx="8" ry="8"/>
+  <rect x="1" y="1" width="698" height="198" fill="none" stroke="#d0d7de" stroke-width="1.5" rx="8" ry="8"/>
+  <!-- Dashed inner border to indicate placeholder -->
+  <rect x="12" y="12" width="676" height="176" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="6,4" rx="4" ry="4"/>
+  <!-- Camera / image icon -->
+  <rect x="316" y="52" width="68" height="52" fill="#dee2e6" rx="6" ry="6"/>
+  <circle cx="350" cy="78" r="16" fill="#adb5bd"/>
+  <circle cx="350" cy="78" r="10" fill="#f6f8fa"/>
+  <circle cx="370" cy="60" r="5" fill="#adb5bd"/>
+  <!-- Text -->
+  <text x="350" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#57606a" text-anchor="middle" font-weight="600">Replace this placeholder with a screenshot</text>
+  <text x="350" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6e7781" text-anchor="middle">Your fork → Settings → Features → check Issues</text>
+  <text x="350" y="168" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8c959f" text-anchor="middle">Add the image to the images/ folder and update the URL in start.yml</text>
+</svg>

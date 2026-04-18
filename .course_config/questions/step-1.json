@@ -4,12 +4,13 @@
   "requiredPatterns": [
     "\\bgit\\b",
     "\\bgithub\\b",
-    "version control|history|track",
-    "host|platform|remote|share|collaborat",
-    "gitignore|\\.gitignore|ignore",
-    "untracked|tracked|generated|temporary|secret|log|machine|exclud|omit"
+    "version control|history|track|record|change|revision|snapshot|audit",
+    "host|platform|remote|share|collaborat|store|online|cloud|service|web|central|publish|push|access|team|others|back.?up|sync",
+    "gitignore|\\.gitignore|ignore|ignored|exclude|excluded",
+    "untracked|tracked|generated|temporary|secret|log|machine|exclud|omit|unwanted|skip|unnecessary|clutter|binary|compiled|cache|cached|build|output|sensitive|private|password|credential|large"
   ],
+  "minimumRequiredPatterns": 5,
   "minimumWordCount": 20,
   "requireSentenceStructure": true,
-  "failureMessage": "Your step 1 answer is not complete yet. Please write 2 to 4 full sentences that explain the difference between Git and GitHub and why .gitignore is useful."
+  "failureMessage": "Your step 1 answer needs a bit more. Please write 2\u20134 full sentences in your own words covering: (1) what Git does, (2) what GitHub adds on top of Git, and (3) why .gitignore is useful. Try explaining each idea as you would to a colleague who has not used Git before."
 }

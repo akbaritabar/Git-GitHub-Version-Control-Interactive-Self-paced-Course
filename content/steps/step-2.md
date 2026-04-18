@@ -67,11 +67,13 @@ These topics help ensure that code, data, software environments, and analysis pi
 
 ### Your question for step 2
 
-Reply in this tracking issue with a concise answer in full sentences:
+Please reply in this tracking issue with **2–5 full sentences in your own words**:
 
-**Why might someone fork a repository, why might someone create a branch instead of working directly on the main branch, and name one advanced reproducibility tool or practice you want to learn next (for example SnakeMake, Docker/Podman, `renv`, `uv`, or GitHub Actions)?**
+**Why might someone fork a repository, why might someone create a branch instead of working directly on the main branch, and name one advanced reproducibility tool or practice you want to learn next?**
 
-When you have answered, comment `/done 2` in this same tracking issue.
-You may include your answer and the `/done 2` command in the same comment, or post them as two separate comments.
+For the last part, pick any tool or workflow that interests you — for example SnakeMake, Docker/Podman, `renv`, `uv`, `quarto`, GitHub Actions, or Zenodo.
+Write in your own words — there is no need to quote or copy from the materials above.
+
+When you have answered, add `/done 2` to the same comment or in a new comment below.
 
 Tracking issue: {{TRACKING_ISSUE_URL}}
