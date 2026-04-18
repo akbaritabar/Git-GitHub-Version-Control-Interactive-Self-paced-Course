@@ -9,8 +9,8 @@
     "gitignore|\\.gitignore|ignore|ignored|exclude|excluded",
     "untracked|tracked|generated|temporary|secret|log|machine|exclud|omit|unwanted|skip|unnecessary|clutter|binary|compiled|cache|cached|build|output|sensitive|private|password|credential|large"
   ],
-  "minimumRequiredPatterns": 5,
-  "minimumWordCount": 20,
+  "minimumRequiredPatterns": 3,
+  "minimumWordCount": 10,
   "requireSentenceStructure": true,
-  "failureMessage": "Your step 1 answer needs a bit more. Please write 2\u20134 full sentences in your own words covering: (1) what Git does, (2) what GitHub adds on top of Git, and (3) why .gitignore is useful. Try explaining each idea as you would to a colleague who has not used Git before."
+  "failureMessage": "Your step 1 answer needs a bit more text. Please write 2\u20134 full sentences (with proper grammar and punctuation) in your own words covering: (1) what Git does, (2) what GitHub adds on top of Git, and (3) why .gitignore is useful. Try explaining each idea as you would to a colleague who has not used Git before. If in doubt, checking the course materials again can help you find the information you need to write your answer."
 }

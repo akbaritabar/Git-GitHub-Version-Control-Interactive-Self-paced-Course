@@ -1,6 +1,6 @@
 {
   "step": 2,
-  "prompt": "Why might someone fork a repository, why might someone create a branch instead of working directly on main, and name one advanced reproducibility tool or practice you want to learn next?",
+  "prompt": "Why might someone fork a repository, why might someone create a branch instead of working directly on main branch, and name one advanced reproducibility tool or practice you want to learn next?",
   "requiredPatterns": [
     "fork",
     "copy|own repository|your own|own account|personal|separate|independent|duplicate",
@@ -8,8 +8,8 @@
     "experiment|feature|separate|parallel|without affecting|without changing|review|main|isolated|isolation|safe|safely|try|protect|different|new idea",
     "snakemake|snake ?make|targets|github actions|docker|podman|container|renv|\\buv\\b|osf|zenodo|quarto|nextflow|conda|pixi|nf.core|rmarkdown|r markdown|jupyter|\\bmake\\b|workflow|automation|reproducib"
   ],
-  "minimumRequiredPatterns": 5,
-  "minimumWordCount": 24,
+  "minimumRequiredPatterns": 3,
+  "minimumWordCount": 10,
   "requireSentenceStructure": true,
-  "failureMessage": "Your step 2 answer needs a bit more. Please write 2\u20135 full sentences in your own words covering: (1) why someone would fork a repository, (2) why you might use a branch instead of working on main, and (3) one advanced reproducibility tool or workflow you want to learn (for example SnakeMake, Docker, renv, quarto, or GitHub Actions). Explain the ideas rather than just listing terms."
+  "failureMessage": "Your step 2 answer needs a bit more text. Please write 2\u20135 full sentences (with proper grammar and punctuation) in your own words covering: (1) why someone would fork a repository, (2) why you might use a branch instead of working on main, and (3) one advanced reproducibility tool or workflow you want to learn (for example SnakeMake, Docker, renv, quarto, or GitHub Actions). Explain the ideas rather than just listing terms. If in doubt, checking the course materials again can help you find the information you need to write your answer."
 }

@@ -49,11 +49,11 @@ When a participant forks the repository, three GitHub objects are created automa
 - **Label:** `new_participant`
 - **Purpose:** The student's active course workspace. All `/done N` commands are posted here. The `continue.yml` workflow filters by the `new_participant` label.
 - **Metadata lines in body (do not edit):**
-  - `Participant: \`username\``
-  - `Fork repo: \`owner/repo\``
-  - `Fork sha: \`sha\``
-  - `Enrollment issue: #N`
-  - `Fork archive: <url|disabled>`
+  - Participant: `username`
+  - Fork repo: `owner/repo`
+  - Fork sha: `sha`
+  - Enrollment issue: `#N`
+  - Fork archive: `<url|disabled>`
 - **First comment:** Instructions to enable Issues in the fork (with image placeholder), plus status of the fork archive.
 - **Second comment:** Step 1 teaching content and question.
 
@@ -66,14 +66,6 @@ When a participant forks the repository, three GitHub objects are created automa
 - **Step 1 content added by:** `1.js`, after a valid `/done 1` answer is accepted.
 - **Step 2 content added by:** `2.js`, after a valid `/done 2` answer is accepted.
 - **All fork writes are wrapped in try/catch.** A failure to write to the fork archive never blocks the upstream course flow.
-
-### Fork archive image placeholder
-
-`images/fork-issues-enable-placeholder.svg` is a placeholder for a screenshot showing students where to enable Issues in their fork settings.
-
-To replace it with your own screenshot:
-1. Add your image file to the `images/` folder (for example `images/fork-issues-enable.png`).
-2. In `start.yml`, find the line referencing `fork-issues-enable-placeholder.svg` and update the filename to match your new image.
 
 ## How to extend the course to step 3 and beyond
 

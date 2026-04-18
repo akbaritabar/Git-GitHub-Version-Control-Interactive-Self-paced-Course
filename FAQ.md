@@ -7,9 +7,9 @@ This page collects common problems participants encounter and explains how to re
 ## Q1: My personal archive in my fork is not being updated
 
 **What the personal archive is:**
-After you complete each step, the course automatically saves a copy of the teaching materials to a special issue called *"Course Materials Archive — Git/GitHub Interactive Course"* inside your own fork. This gives you a personal reference to come back to later.
+After you complete each step, the course automatically saves a copy of the teaching materials to a special issue called *"Course Materials Archive — Git/GitHub Interactive Course"* inside your own fork. This gives you a personal reference to come back to later. Please note: your progress in the course continues in the issue created in the main repository that is on instructor's GitHub page.
 
-**Why it might not be updating:**
+**Why the personal archive issue might not be updating:**
 The most common reason is that **Issues are not enabled in your fork**. GitHub turns Issues off by default in all forks, so you need to enable them manually **before you complete Step 1**. The archive issue is created automatically when you submit your first valid answer — if Issues are disabled at that moment, no archive issue is created.
 
 > **Note:** The archive is attempted again at Step 2 as a fallback. If you enabled Issues after Step 1 was already completed, completing Step 2 will still create the archive and save Step 2 content. Step 1 content will not be retroactively added, but you can find everything in your tracking issue.
@@ -23,13 +23,13 @@ The most common reason is that **Issues are not enabled in your fork**. GitHub t
 4. Check the box next to **Issues**
 5. Reload the page to confirm Issues is now showing as a tab
 
-Once Issues is enabled, the archive will be created when you complete the next step.
+Once Issues is enabled, the archive will be created when you complete the next step in the instructor's repository.
 
 **Note:** The archive is a personal reference only. Your course progress in the upstream tracking issue is completely separate and is never affected by this setting.
 
 ---
 
-## Q2: Something broke and my course is stuck — how do I start fresh?
+## Q2: Something broke and my course is stuck — how do I re-start?
 
 There are several situations where a step might appear stuck:
 
@@ -104,9 +104,9 @@ The course stores important information in the body of your tracking issue (part
 1. Contact your instructor and explain what happened
 2. The instructor can look at the issue's edit history (click the pencil icon on the issue body → "edited N minutes ago") and manually restore the original content
 3. The metadata lines that must be preserved are:
-   - Participant: `\username\`
-   - Fork repo: `\owner/repo\`
-   - Fork sha: `\sha\`
+   - Participant: `username`
+   - Fork repo: `owner/repo`
+   - Fork sha: `sha`
    - Enrollment issue: `#N`
    - Fork archive: `<url or disabled>`
    - The two checklist lines starting with `- [ ]` or `- [x]`

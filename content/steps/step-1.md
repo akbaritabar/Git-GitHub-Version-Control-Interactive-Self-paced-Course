@@ -1,4 +1,4 @@
-## Step 1: Why Version Control, What Git, What GitHub?
+## Step 1: Why do we need Version Control? What is Git? What is GitHub?
 
 This step covers the foundations.
 
@@ -15,7 +15,7 @@ That workflow becomes hard to search, hard to merge, and hard to trust.
 
 Version control replaces that file-name chaos with a tracked and auditable history of changes.
 
-![Placeholder for your Word-versioning example image]({{IMAGE_BASE_URL}}/example-placeholder.svg)
+![Placeholder for your Word-versioning example image]({{IMAGE_BASE_URL}}/example_of_journal_article_using_MS_Wod_name_initials_dates_still_hard.PNG)
 
 You can later replace that placeholder with your slide image that demonstrates the same versioning problem.
 

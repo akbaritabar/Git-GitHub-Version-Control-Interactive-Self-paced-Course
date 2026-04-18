@@ -46,15 +46,16 @@ module.exports = async function ({ github, context, core }) {
       '',
       'You have worked through both steps and demonstrated a solid understanding of:',
       '',
-      '- using Git to track and audit project history',
-      '- using GitHub for collaboration and remote hosting',
-      '- forks, remotes, pull, push, and branch workflows',
-      '- connecting version control practices to reproducible and open science workflows',
+      '- Using Git to track and audit project history',
+      '- Using GitHub for collaboration and remote hosting',
+      '- Forks, remotes, pull, push, and branch workflows',
+      '- Connecting version control practices to reproducible and open science workflows',
       '',
-      'Please leave a final comment in this issue with any thoughts, feedback, or questions about the course.',
+      'Please leave a final comment in this issue with any thoughts, feedback, or questions about the course. What could be improved? What did you like?',
+      '',
       'When you are ready, click **Close issue** (or use "Close with comment" after your last reply) to mark your participation as complete.',
       '',
-      'Well done.'
+      'Well done!'
     ].join('\n')
   });
 

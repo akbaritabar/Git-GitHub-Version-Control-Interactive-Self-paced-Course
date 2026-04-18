@@ -100,7 +100,7 @@ module.exports = async function ({ github, context, core }) {
   const body = [
     'Step 1 complete.',
     '',
-    'Your answer demonstrates the foundational concepts clearly. Step 2 is now unlocked.',
+    'Your answer demonstrates the foundational concepts clearly. Step 2 is now unlocked and is accessible below.',
     '',
     nextStep
   ].join('\n');
