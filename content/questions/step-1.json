@@ -1,0 +1,13 @@
+{
+  "step": 1,
+  "prompt": "What is the difference between Git and GitHub, and why might a .gitignore file be useful?",
+  "requiredPatterns": [
+    "\\bgit\\b",
+    "\\bgithub\\b",
+    "version control|history|track",
+    "host|platform|remote|share|collaborat",
+    "gitignore|\\.gitignore|ignore",
+    "untracked|generated|temporary|secret|log|machine"
+  ],
+  "failureMessage": "I could not yet find a complete step 1 answer from you. Before using `/done 1`, add a short comment that explains the difference between Git and GitHub and mentions why `.gitignore` is useful."
+}

@@ -1,0 +1,83 @@
+name: Fork Triggered Course Start
+
+on:
+  fork:
+
+jobs:
+  start-course:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout course content
+        uses: actions/checkout@v5
+        with:
+          sparse-checkout: |
+            .github/scripts
+            content/steps
+            content/questions
+            images
+          sparse-checkout-cone-mode: false
+
+      - name: Create upstream tracking issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_PAT_CROSSREPO }}
+          script: |
+            const helpers = require('./.github/scripts/github-helpers.js');
+
+            const participant = context.actor;
+            const forkRepo = context.payload.forkee.full_name;
+            const [forkOwner, forkName] = forkRepo.split('/');
+            const forkInfo = await github.rest.repos.get({ owner: forkOwner, repo: forkName });
+            const defaultBranch = context.payload.repository.default_branch;
+            const defaultRef = await github.rest.git.getRef({
+              owner: forkOwner,
+              repo: forkName,
+              ref: `heads/${forkInfo.data.default_branch}`
+            });
+            const forkSha = defaultRef.data.object.sha;
+
+            const issueBody = [
+              `Hi @${participant}!`,
+              '',
+              'Welcome to the interactive Git and GitHub course.',
+              '',
+              `Participant: \`${participant}\``,
+              `Fork repo: \`${forkRepo}\``,
+              `Fork sha: \`${forkSha}\``,
+              '',
+              'This issue tracks your progress through the course.',
+              'Answer each step question in a normal comment, then use the matching `/done N` command to ask the workflow to check your answer.',
+              '',
+              '- [ ] 1. Git, GitHub, and version control basics',
+              '- [ ] 2. Forks, remotes, branches, and collaboration'
+            ].join('\n');
+
+            const issue = await helpers.createIssue({
+              github,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `@${participant} started the Git/GitHub interactive course`,
+              body: issueBody,
+              labels: ['new_participant']
+            });
+
+            const variables = helpers.buildTemplateVariables({
+              context,
+              forkRepo,
+              trackingIssueUrl: issue.data.html_url,
+              participant,
+              defaultBranch
+            });
+            const stepOne = helpers.loadStepMarkdown(1, variables);
+
+            await helpers.createComment({
+              github,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.data.number,
+              body: [
+                'Course setup complete. Step 1 is ready below.',
+                '',
+                stepOne
+              ].join('\n')
+            });

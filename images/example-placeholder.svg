@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder image for course lesson content</title>
+  <desc id="desc">A simple placeholder graphic that marks where a slide image can be added later.</desc>
+  <rect width="1200" height="700" fill="#f5f1e8"/>
+  <rect x="45" y="45" width="1110" height="610" rx="28" fill="#fffaf2" stroke="#1f3a5f" stroke-width="6" stroke-dasharray="18 14"/>
+  <circle cx="170" cy="150" r="54" fill="#c85c38"/>
+  <rect x="255" y="112" width="520" height="28" rx="14" fill="#1f3a5f"/>
+  <rect x="255" y="162" width="410" height="20" rx="10" fill="#5f7a99"/>
+  <rect x="95" y="255" width="1010" height="90" rx="18" fill="#efe3cf"/>
+  <rect x="95" y="380" width="1010" height="90" rx="18" fill="#efe3cf"/>
+  <rect x="95" y="505" width="1010" height="90" rx="18" fill="#efe3cf"/>
+  <text x="95" y="640" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" fill="#1f3a5f">Replace this file with one of your slide images, or add new images to the images folder and reference them from the step markdown.</text>
+</svg>

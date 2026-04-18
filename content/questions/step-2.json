@@ -1,0 +1,12 @@
+{
+  "step": 2,
+  "prompt": "Why might someone fork a repository, why might someone create a branch instead of working directly on main, and what advanced reproducibility tool or practice would you learn next?",
+  "requiredPatterns": [
+    "fork",
+    "copy|own repository|your own repository|own account|personal copy",
+    "branch",
+    "experiment|feature|separate|parallel|without affecting|without changing|review|main branch",
+    "snakemake|snake ?make|targets|github actions|docker|podman|container|renv|\\buv\\b|osf|zenodo"
+  ],
+  "failureMessage": "I could not yet find a complete step 2 answer from you. Before using `/done 2`, add a short comment that explains forks and branches, and mention at least one advanced reproducibility topic you want to learn next (for example SnakeMake, Docker/Podman, renv, uv, or GitHub Actions)."
+}
