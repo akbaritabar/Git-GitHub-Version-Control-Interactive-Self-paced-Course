@@ -18,24 +18,27 @@ module.exports = async function ({ github, context }) {
     return '-1';
   }
 
-  const participantMatch = body.match(/^Participant:\s*`([^`]+)`\s*$/m);
-  const participant = participantMatch ? participantMatch[1] : null;
-  if (participant && context.actor.toLowerCase() !== participant.toLowerCase()) {
-    await github.rest.issues.createComment({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      issue_number: context.issue.number,
-      body: `Only @${participant} can use \`/done N\` in this tracking issue.`
-    });
-    return '-1';
-  }
-
   const max = Math.max(...allNumbers);
   const trimmed = (context.payload.comment.body || '').trim();
+
+  // Step 1: Check whether this comment is a /done N command.
+  // This check must come first to avoid posting bot messages in response to
+  // ordinary comments (including bot-posted messages), which would create a
+  // feedback loop where bot messages containing "done" re-trigger the workflow.
   const commandMatch = /^\/done\s+(\d+)$/i.exec(trimmed);
 
   if (!commandMatch) {
-    if (/done/i.test(trimmed) && !trimmed.includes('\n')) {
+    // The comment is not a /done N command.
+    // Only send a format hint to the registered participant. Never reply to
+    // comments from other users or to multi-line messages (which are likely
+    // answer drafts or bot-posted content, not intended commands).
+    const earlyParticipantMatch = body.match(/^Participant:\s*`([^`]+)`\s*$/m);
+    const earlyParticipant = earlyParticipantMatch ? earlyParticipantMatch[1] : null;
+    const actorIsParticipant =
+      earlyParticipant &&
+      context.actor.toLowerCase() === earlyParticipant.toLowerCase();
+
+    if (actorIsParticipant && /done/i.test(trimmed) && !trimmed.includes('\n')) {
       await github.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -50,6 +53,25 @@ module.exports = async function ({ github, context }) {
     return '-1';
   }
 
+  // Step 2: Verify the commenter is the registered participant.
+  const participantMatch = body.match(/^Participant:\s*`([^`]+)`\s*$/m);
+  if (!participantMatch) {
+    // The issue body is malformed and the participant cannot be confirmed.
+    // Block silently; the maintainer should inspect the tracking issue body.
+    return '-1';
+  }
+  const participant = participantMatch[1];
+  if (context.actor.toLowerCase() !== participant.toLowerCase()) {
+    await github.rest.issues.createComment({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      issue_number: context.issue.number,
+      body: `Only @${participant} can use \`/done N\` in this tracking issue.`
+    });
+    return '-1';
+  }
+
+  // Step 3: Validate the step number.
   const stepNumber = Number.parseInt(commandMatch[1], 10);
   if (stepNumber < 1 || !allNumbers.includes(stepNumber)) {
     await github.rest.issues.createComment({

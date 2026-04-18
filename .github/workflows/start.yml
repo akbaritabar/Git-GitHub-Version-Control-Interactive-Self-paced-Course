@@ -14,7 +14,6 @@ jobs:
             .github/scripts
             content/steps
             .course_config/questions
-            images
           sparse-checkout-cone-mode: false
 
       - name: Create upstream tracking issue

@@ -120,10 +120,28 @@ In addition to adding the required secret, check these repository settings:
 2. Issues enabled in upstream repository
   - Repository Settings -> Features
   - Ensure Issues is checked.
-3. Forking policy for private testing
-  - If testing in a private repository, ensure private forking is allowed by your account or organization policy.
-4. Collaborator access for private testing
-  - Test participants must have access to the upstream private repository before they can fork and participate.
+3. Create the `new_participant` label in the upstream repository
+  - Go to Issues -> Labels -> New label.
+  - Set the name to exactly: `new_participant`
+  - This is a hard requirement. The `continue.yml` workflow checks
+    `contains(github.event.issue.labels.*.name, 'new_participant')` before
+    processing any `/done N` command. If the label does not exist when the
+    fork event fires, the tracking issue is created without it and the course
+    will never advance, with no visible error.
+  - Create the label once, before your first test fork.
+4. Forking policy for private testing
+  - In the upstream private repository: Settings -> General -> Features section.
+  - Enable "Allow forking" so collaborators can fork the private repository.
+  - Individual GitHub accounts can fork private repositories when this setting
+    is on and the participant has been added as a collaborator. You do not need
+    a GitHub organization for this to work.
+  - The `fork` event fires in the upstream repository when a collaborator forks
+    it, triggering `start.yml` and creating the tracking issue as expected.
+5. Collaborator access for private testing
+  - Add each test participant as a collaborator in the upstream repository
+    (Settings -> Collaborators) before they fork and start the course.
+  - Without collaborator access they cannot fork a private repository, comment
+    on the upstream tracking issue, or trigger the course workflows.
 
 ## Optional future secret
 
@@ -133,6 +151,17 @@ If future steps need cross-repository content edits, branch creation, or pull-re
 
 ## Private repository reminder
 
-Private testing can work if private forking is enabled and testers can access the upstream private repository.
+Forking a private repository works for individual GitHub accounts provided:
 
-Image embedding is less predictable in private setups. Keep core instructions text-first and verify image rendering during testing.
+1. "Allow forking" is enabled in the upstream repository (Settings -> General).
+2. The participant has been added as a collaborator.
+3. The `GH_PAT_CROSSREPO` secret is a classic Personal Access Token with
+   `repo` scope. The `public_repo` scope is sufficient for public repositories
+   but does not cover private repositories; using it with a private upstream
+   will cause the issue-creation step to fail silently.
+
+Images embedded via `{{IMAGE_BASE_URL}}` resolve to `raw.githubusercontent.com`
+URLs, which require authentication for private repositories. They will not
+render inside GitHub issue comments when the repository is private. Keep core
+lesson text and commands in plain markdown text, and verify image rendering
+during your first private test before relying on images.

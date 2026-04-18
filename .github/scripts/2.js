@@ -39,17 +39,19 @@ module.exports = async function ({ github, context, core }) {
     repo: context.repo.repo,
     issue_number: context.issue.number,
     body: [
-      'Step 2 complete.',
+      'Step 2 complete. Congratulations on finishing the Git and GitHub interactive course.',
       '',
-      'You have completed the current two-step version of this interactive course.',
+      'You have worked through both steps and demonstrated a solid understanding of:',
       '',
-      'You now have the basic logic needed for:',
-      '- using Git to track project history',
-      '- using GitHub to collaborate',
-      '- understanding forks, remotes, pulls, pushes, and branches',
-      '- connecting Git workflows to reproducibility and open science practices',
+      '- using Git to track and audit project history',
+      '- using GitHub for collaboration and remote hosting',
+      '- forks, remotes, pull, push, and branch workflows',
+      '- connecting version control practices to reproducible and open science workflows',
       '',
-      'If additional steps are added later, they can continue from this tracking issue.'
+      'Please leave a final comment in this issue with any thoughts, feedback, or questions about the course.',
+      'When you are ready, click **Close issue** (or use "Close with comment" after your last reply) to mark your participation as complete.',
+      '',
+      'Well done.'
     ].join('\n')
   });
 
