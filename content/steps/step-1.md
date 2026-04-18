@@ -15,9 +15,7 @@ That workflow becomes hard to search, hard to merge, and hard to trust.
 
 Version control replaces that file-name chaos with a tracked and auditable history of changes.
 
-![Placeholder for your Word-versioning example image]({{IMAGE_BASE_URL}}/example_of_journal_article_using_MS_Wod_name_initials_dates_still_hard.PNG)
-
-You can later replace that placeholder with your slide image that demonstrates the same versioning problem.
+![Example of a journal article folder using author initials and dates for versioning — this quickly becomes unmanageable]({{IMAGE_BASE_URL}}/example_of_journal_article_using_MS_Wod_name_initials_dates_still_hard.PNG)
 
 ### Git and GitHub
 
