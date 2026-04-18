@@ -35,3 +35,7 @@ This README describes only the current two-step version.
 ## Private testing note
 
 This course can be tested in a private repository if private forking is allowed and collaborators have access to the upstream repository. For maintainer caveats and settings, see the instructor documentation in `.instructor_documents/`.
+
+## Troubleshooting
+
+If you run into problems — your personal archive is not updating, a step appears stuck, or you need to start over — see the [Frequently Asked Questions](FAQ.md) for step-by-step solutions.

@@ -68,10 +68,56 @@ module.exports = async function ({ github, context, core }) {
   });
 
   try {
-    const archiveMatch = issueBody.match(/Fork archive:\s*(\S+)/);
-    const archiveUrl = archiveMatch ? archiveMatch[1] : null;
-    if (archiveUrl && archiveUrl !== 'disabled' && archiveUrl !== 'pending') {
-      const urlMatch = archiveUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
+    const archiveMetaMatch = issueBody.match(/Fork archive:\s*(\S+)/);
+    const archiveMetaValue = archiveMetaMatch ? archiveMetaMatch[1] : 'pending';
+    let archiveIssueUrl = null;
+
+    if (archiveMetaValue === 'pending' || archiveMetaValue === 'disabled') {
+      // Still not created — attempt now (student may have enabled Issues after step 1)
+      const [archiveForkOwner, archiveForkName] = forkRepo.split('/');
+      try {
+        const archiveBody = [
+          '# Course Materials Archive — Git/GitHub Interactive Course',
+          '',
+          'This issue is a personal archive of your course materials.',
+          '',
+          `**Source:** Your course tracking issue: ${issue.html_url}`,
+          '',
+          'Teaching content from each step will be added here as you complete it.',
+          'You can return to this issue at any time to review what you learned.',
+          '',
+          '---',
+          '',
+          '*Your active course interaction takes place in the upstream repository. This archive is for your personal reference.*'
+        ].join('\n');
+        const createdArchive = await github.rest.issues.create({
+          owner: archiveForkOwner,
+          repo: archiveForkName,
+          title: 'Course Materials Archive — Git/GitHub Interactive Course',
+          body: archiveBody
+        });
+        archiveIssueUrl = createdArchive.data.html_url;
+        // Update tracking issue body with the new archive URL
+        const latestBody = (await github.rest.issues.get({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          issue_number: context.issue.number
+        })).data.body || '';
+        await github.rest.issues.update({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+          issue_number: context.issue.number,
+          body: latestBody.replace(/Fork archive:\s*\S+/, `Fork archive: ${archiveIssueUrl}`)
+        });
+      } catch (createErr) {
+        core.warning(`Could not create fork archive issue in step 2: ${createErr.message}`);
+      }
+    } else {
+      archiveIssueUrl = archiveMetaValue;
+    }
+
+    if (archiveIssueUrl) {
+      const urlMatch = archiveIssueUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
       if (urlMatch) {
         const [, archiveOwner, archiveRepo, archiveIssueStr] = urlMatch;
         const stepContent = helpers.loadStepMarkdown(2, variables);

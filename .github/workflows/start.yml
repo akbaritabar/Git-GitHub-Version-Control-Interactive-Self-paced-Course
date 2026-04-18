@@ -39,6 +39,69 @@ jobs:
             const upstreamRepo = `${context.repo.owner}/${context.repo.repo}`;
             const imageBaseUrl = `https://raw.githubusercontent.com/${upstreamRepo}/${defaultBranch}/images`;
 
+            // === Close any existing open tracking/enrollment issues for this participant ===
+            // This handles the re-fork case: student deletes fork and forks again.
+            // Old tracking issues must have their new_participant label removed so
+            // continue.yml no longer fires on them (GitHub fires issue_comment on
+            // closed issues too, so closing alone is not sufficient).
+            const existingIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'new_participant',
+              per_page: 100
+            });
+            for (const oldIssue of existingIssues) {
+              const oldBody = oldIssue.body || '';
+              const oldParticipantMatch = oldBody.match(/^Participant:\s*`([^`]+)`\s*$/m);
+              if (!oldParticipantMatch) continue;
+              if (oldParticipantMatch[1].toLowerCase() !== participant.toLowerCase()) continue;
+
+              // Remove new_participant label first to disable continue.yml routing on this issue
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: oldIssue.number,
+                  name: 'new_participant'
+                });
+              } catch (labelErr) {
+                core.warning(`Could not remove label from old tracking issue #${oldIssue.number}: ${labelErr.message}`);
+              }
+
+              // Close linked enrollment issue if present
+              const oldEnrollmentMatch = oldBody.match(/Enrollment issue:\s*#(\d+)/);
+              if (oldEnrollmentMatch) {
+                const oldEnrollmentNumber = parseInt(oldEnrollmentMatch[1], 10);
+                try {
+                  await github.rest.issues.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: oldEnrollmentNumber,
+                    state: 'closed',
+                    state_reason: 'not_planned'
+                  });
+                } catch (e) {
+                  core.warning(`Could not close old enrollment issue #${oldEnrollmentNumber}: ${e.message}`);
+                }
+              }
+
+              // Close old tracking issue with a redirect note
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: oldIssue.number,
+                body: `@${participant} has started a new course session by re-forking the repository. This tracking issue is now superseded and has been closed. Your new course tracking issue will be created momentarily — look for an issue titled **\`@${participant} started the Git/GitHub interactive course\`** in the Issues tab.`
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: oldIssue.number,
+                state: 'closed',
+                state_reason: 'not_planned'
+              });
+            }
+
             // === Object 1: Enrollment record in upstream (instructor dashboard) ===
             const enrollmentBodyInitial = [
               `## Course Enrollment: @${participant}`,
@@ -118,54 +181,14 @@ jobs:
               body: enrollmentBodyFinal
             });
 
-            // === Object 3: Fork archive issue (attempt with graceful failure) ===
-            let forkArchiveUrl = 'disabled';
-            try {
-              const forkRepoData = await github.rest.repos.get({ owner: forkOwner, repo: forkName });
-              if (forkRepoData.data.has_issues) {
-                const archiveBody = [
-                  '# Course Materials Archive — Git/GitHub Interactive Course',
-                  '',
-                  'This issue is a personal archive of your course materials.',
-                  '',
-                  `**Source:** Your course tracking issue: ${trackingIssueUrl}`,
-                  '',
-                  'Teaching content from each step will be added here as you complete it.',
-                  'You can return to this issue at any time to review what you learned.',
-                  '',
-                  '---',
-                  '',
-                  '*Your active course interaction takes place in the upstream repository. This archive is for your personal reference.*'
-                ].join('\n');
-                const archiveIssue = await github.rest.issues.create({
-                  owner: forkOwner,
-                  repo: forkName,
-                  title: 'Course Materials Archive — Git/GitHub Interactive Course',
-                  body: archiveBody
-                });
-                forkArchiveUrl = archiveIssue.data.html_url;
-              }
-            } catch (err) {
-              core.warning(`Could not create fork archive issue: ${err.message}`);
-            }
-
-            // Update tracking issue body: replace "Fork archive: pending" with actual value
-            const updatedTrackingBody = trackingBody.replace(
-              'Fork archive: pending',
-              `Fork archive: ${forkArchiveUrl}`
-            );
-            await github.rest.issues.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: trackingIssueNumber,
-              body: updatedTrackingBody
-            });
+            // === Object 3: Fork archive issue ===
+            // We do NOT attempt to create this at fork time because GitHub disables
+            // Issues in all new forks by default. The student will enable Issues after
+            // reading the instructions below. The archive issue is created lazily by
+            // 1.js when step 1 is completed, by which time Issues should be enabled.
+            // The tracking body keeps "Fork archive: pending" until then.
 
             // === Comment 1: Issues activation instructions ===
-            const archiveStatus = forkArchiveUrl !== 'disabled'
-              ? `Your personal archive issue was created: ${forkArchiveUrl}`
-              : 'Your personal archive issue was not created yet — enable Issues first (see instructions below), then contact your instructor if you want it created retroactively.';
-
             await helpers.createComment({
               github,
               owner: context.repo.owner,
@@ -190,7 +213,7 @@ jobs:
                 '',
                 `![Screenshot: enabling Issues in fork settings](${imageBaseUrl}/fork-issues-enable-placeholder.svg)`,
                 '',
-                `> **Status:** ${archiveStatus}`,
+                '> **Please enable Issues before completing Step 1.** The archive will be created automatically when you submit your first answer.',
                 '',
                 '**You can enable Issues now or at any time before finishing the course.**',
                 'Your progress in this tracking issue is not affected either way.',
