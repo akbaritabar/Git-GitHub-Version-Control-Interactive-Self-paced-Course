@@ -100,7 +100,7 @@ module.exports = async function ({ github, context, core }) {
   const body = [
     'Step 1 complete.',
     '',
-    'Your answer demonstrates the foundational concepts clearly. Step 2 is now unlocked and is accessible below.',
+    'Your answer covers the Git and version control basics well. Step 2 is now unlocked and covers GitHub — the online hosting and collaboration platform that works with Git.',
     '',
     nextStep
   ].join('\n');
@@ -128,7 +128,7 @@ module.exports = async function ({ github, context, core }) {
           repo: archiveRepo,
           issue_number: parseInt(archiveIssueStr, 10),
           body: [
-            '## Step 1 — Git, GitHub, and Version Control Basics',
+            '## Step 1 — Git and Version Control Basics',
             '',
             `*Archived from your course tracking issue: ${issue.html_url}*`,
             `*Step 1 completed: ${completionDate}*`,

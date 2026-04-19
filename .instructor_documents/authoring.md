@@ -1,6 +1,6 @@
 # Instructor Authoring Guide
 
-This guide is for instructors and maintainers of the current two-step course.
+This guide is for instructors and maintainers of the current four-step course.
 
 ## Important note about answer checking
 
@@ -19,11 +19,17 @@ In practice, this means a simple list of isolated keywords should fail more ofte
 
 - `content/steps/step-1.md`
 - `content/steps/step-2.md`
+- `content/steps/step-3.md`
+- `content/steps/step-4.md`
 - `.course_config/questions/step-1.json`
 - `.course_config/questions/step-2.json`
+- `.course_config/questions/step-3.json`
+- `.course_config/questions/step-4.json`
 - `images/`
 - `.github/scripts/1.js`
 - `.github/scripts/2.js`
+- `.github/scripts/3.js`
+- `.github/scripts/4.js`
 
 ## Current workflow files
 
@@ -40,7 +46,7 @@ When a participant forks the repository, three GitHub objects are created automa
 
 - **Title:** `[Enrollment] @username`
 - **Label:** `enrollment`
-- **Purpose:** Tracks who has joined the course. Instructors can filter by the `enrollment` label to see all active participants. Automatically closed by `2.js` when the participant finishes.
+- **Purpose:** Tracks who has joined the course. Instructors can filter by the `enrollment` label to see all active participants. Automatically closed by `4.js` when the participant finishes.
 - **Body:** Includes a prominent redirect message in case the participant opens it by accident, with a direct link to their personal tracking issue.
 
 ### Object 2 — Course tracking issue (upstream, student-facing)
@@ -65,30 +71,33 @@ When a participant forks the repository, three GitHub objects are created automa
 - **If Issues are disabled:** The course continues normally. The tracking issue body records `Fork archive: disabled`. Students who enable Issues later can contact the instructor to have the archive created retroactively (manually).
 - **Step 1 content added by:** `1.js`, after a valid `/done 1` answer is accepted.
 - **Step 2 content added by:** `2.js`, after a valid `/done 2` answer is accepted.
+- **Step 3 content added by:** `3.js`, after a valid `/done 3` answer is accepted.
+- **Step 4 content added by:** `4.js`, after a valid `/done 4` answer is accepted.
 - **All fork writes are wrapped in try/catch.** A failure to write to the fork archive never blocks the upstream course flow.
 
-## How to extend the course to step 3 and beyond
+## How to extend the course to step 5 and beyond
 
-Use this checklist each time you add a new step:
+The course currently has four steps. Use this checklist each time you add a new step:
 
 1. Create a new lesson file:
-  - `content/steps/step-3.md`
+  - `content/steps/step-5.md`
 2. Create a new question configuration:
-  - `.course_config/questions/step-3.json`
+  - `.course_config/questions/step-5.json`
 3. Create a new validator script:
-  - copy `.github/scripts/2.js` to `.github/scripts/3.js`
-  - update the script so it validates `stepNumber: 3`
-4. Update the previous step script to unlock the new step:
-  - edit `.github/scripts/2.js`
-  - replace the final completion message with a message that posts step 3 content
+  - copy `.github/scripts/4.js` to `.github/scripts/5.js`
+  - update the script so it validates `stepNumber: 5`
+  - move the enrollment-close and completion message code from `4.js` into `5.js`
+4. Update the previous final step script (now `4.js`) to unlock the new step:
+  - remove the enrollment-close and completion message logic from `4.js`
+  - add code to post step 5 content as the next step
 5. Update the initial tracking checklist:
   - edit `.github/workflows/start.yml`
-  - add `- [ ] 3. <step title>` to the issue body template
+  - add `- [ ] 5. <step title>` to the issue body template
 6. Ensure the parser can see the new unchecked step number:
   - no parser code changes are needed if the checklist line is present in the issue body
 7. Test the full flow in a test fork:
   - verify only the correct participant can progress
-  - verify `/done 3` cannot be repeated once checked
+  - verify `/done 5` cannot be repeated once checked
 
 If you add many steps, keep one script per step (`N.js`) so each checkpoint stays readable and easy to maintain.
 
@@ -145,7 +154,7 @@ Only the teaching portion is archived to the student's fork. The assessment ques
 
 ## Required secret
 
-For the current two-step version, only one secret is required in your upstream course repository.
+For the current four-step version, only one secret is required in your upstream course repository.
 
 ### Step 1 — Create a Personal Access Token (classic)
 

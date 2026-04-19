@@ -12,7 +12,7 @@ module.exports = async function ({ github, context, core }) {
     context,
     issueNumber: context.issue.number,
     actor: context.actor,
-    stepNumber: 2
+    stepNumber: 3
   });
 
   if (!answerCheck.found) {
@@ -21,13 +21,13 @@ module.exports = async function ({ github, context, core }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `Step 2 is not complete yet.\n\n${answerCheck.question.failureMessage}`
+      body: `Step 3 is not complete yet.\n\n${answerCheck.question.failureMessage}`
     });
     core.setOutput('validated', 'false');
     return;
   }
 
-  // === Lazy fork archive creation (fallback if 1.js could not create it) ===
+  // === Lazy fork archive creation (fallback if earlier steps could not create it) ===
   let archiveIssueUrl = null;
   const archiveMetaMatch = issueBody.match(/Fork archive:\s*(\S+)/);
   const archiveMetaValue = archiveMetaMatch ? archiveMetaMatch[1] : 'pending';
@@ -69,7 +69,7 @@ module.exports = async function ({ github, context, core }) {
         body: latestBody.replace(/Fork archive:\s*\S+/, `Fork archive: ${archiveIssueUrl}`)
       });
     } catch (createErr) {
-      core.warning(`Could not create fork archive issue in step 2: ${createErr.message}`);
+      core.warning(`Could not create fork archive issue in step 3: ${createErr.message}`);
     }
   } else {
     archiveIssueUrl = archiveMetaValue;
@@ -82,7 +82,7 @@ module.exports = async function ({ github, context, core }) {
     issue_number: context.issue.number
   })).data.body || '';
 
-  const updatedBody = helpers.markChecklistItem(latestIssueBody, 2);
+  const updatedBody = helpers.markChecklistItem(latestIssueBody, 3);
   await github.rest.issues.update({
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -99,28 +99,28 @@ module.exports = async function ({ github, context, core }) {
     defaultBranch
   });
 
-  const nextStep = helpers.loadStepMarkdown(3, variables);
+  const nextStep = helpers.loadStepMarkdown(4, variables);
   await helpers.createComment({
     github,
     owner: context.repo.owner,
     repo: context.repo.repo,
     issue_number: context.issue.number,
     body: [
-      'Step 2 complete.',
+      'Step 3 complete.',
       '',
-      'Your answer covers the GitHub concepts well. Step 3 is now unlocked and covers branches, collaboration workflows, and open science connections.',
+      'Your answer covers branches and collaboration well. Step 4 is now unlocked — it introduces advanced Git tools, reproducibility workflows, and where to go next.',
       '',
       nextStep
     ].join('\n')
   });
 
-  // === Attempt to archive step 2 teaching content in fork ===
+  // === Attempt to archive step 3 teaching content in fork ===
   try {
     if (archiveIssueUrl) {
       const urlMatch = archiveIssueUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
       if (urlMatch) {
         const [, archiveOwner, archiveRepo, archiveIssueStr] = urlMatch;
-        const stepContent = helpers.loadStepMarkdown(2, variables);
+        const stepContent = helpers.loadStepMarkdown(3, variables);
         const teachingContent = helpers.extractTeachingContent(stepContent);
         const completionDate = new Date().toISOString().slice(0, 10);
         await helpers.createComment({
@@ -129,10 +129,10 @@ module.exports = async function ({ github, context, core }) {
           repo: archiveRepo,
           issue_number: parseInt(archiveIssueStr, 10),
           body: [
-            '## Step 2 — GitHub: Remote Repositories and Online Collaboration',
+            '## Step 3 — Branches, Collaboration, and Open Science',
             '',
             `*Archived from your course tracking issue: ${issue.html_url}*`,
-            `*Step 2 completed: ${completionDate}*`,
+            `*Step 3 completed: ${completionDate}*`,
             '',
             '---',
             '',
@@ -142,7 +142,7 @@ module.exports = async function ({ github, context, core }) {
       }
     }
   } catch (archiveErr) {
-    core.warning(`Could not write step 2 to fork archive: ${archiveErr.message}`);
+    core.warning(`Could not write step 3 to fork archive: ${archiveErr.message}`);
   }
 
   core.setOutput('validated', 'true');

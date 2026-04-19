@@ -1,15 +1,15 @@
 {
   "step": 2,
-  "prompt": "Why might someone fork a repository, why might someone create a branch instead of working directly on main branch, and name one advanced reproducibility tool or practice you want to learn next?",
+  "prompt": "What is GitHub and how is it different from Git? What does git clone do, and why would you run git pull before starting work on a shared project?",
   "requiredPatterns": [
-    "fork",
-    "copy|own repository|your own|own account|personal|separate|independent|duplicate",
-    "branch",
-    "experiment|feature|separate|parallel|without affecting|without changing|review|main|isolated|isolation|safe|safely|try|protect|different|new idea",
-    "snakemake|snake ?make|targets|github actions|docker|podman|container|renv|\\buv\\b|osf|zenodo|quarto|nextflow|conda|pixi|nf.core|rmarkdown|r markdown|jupyter|\\bmake\\b|workflow|automation|reproducib"
+    "\\bgithub\\b",
+    "\\bgit\\b",
+    "host|platform|remote|online|cloud|service|web|central|share|collaborat|store|publish|access|team|backup|sync|account",
+    "clone|copy|download|local|computer",
+    "pull|update|sync|latest|changes|before|collaborator|current|behind|up.?to.?date"
   ],
   "minimumRequiredPatterns": 3,
   "minimumWordCount": 10,
   "requireSentenceStructure": true,
-  "failureMessage": "Your step 2 answer needs a bit more text. Please write 2\u20135 full sentences (with proper grammar and punctuation) in your own words covering: (1) why someone would fork a repository, (2) why you might use a branch instead of working on main, and (3) one advanced reproducibility tool or workflow you want to learn (for example SnakeMake, Docker, renv, quarto, or GitHub Actions). Explain the ideas rather than just listing terms. If in doubt, checking the course materials again can help you find the information you need to write your answer."
+  "failureMessage": "Your step 2 answer needs a bit more text. Please write 2\u20134 full sentences (with proper grammar and punctuation) in your own words covering: (1) what GitHub is and how it differs from Git, (2) what git clone does, and (3) why you would run git pull before working on a shared project. Try explaining each idea as you would to a colleague who has not used Git or GitHub before. If in doubt, re-reading the course materials can help."
 }

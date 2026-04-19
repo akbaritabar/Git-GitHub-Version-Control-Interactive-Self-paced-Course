@@ -1,0 +1,12 @@
+{
+  "step": 4,
+  "prompt": "Pick one tool or practice from this step — for example a Git alias, GitHub Actions, SnakeMake, Docker, renv, Zenodo, or GitHub Pages — and explain briefly what it does and how it could help your own work or research.",
+  "requiredPatterns": [
+    "alias|github actions|github pages|snakemake|snake ?make|targets|docker|podman|container|renv|\\buv\\b|osf|zenodo|quarto|rmarkdown|r markdown|jupyter|workflow|automation|reproducib|rstudio|vs ?code|visual studio|environment|package|website|doi|archive|latexdiff|overleaf|latex",
+    "use|useful|help|work|automate|run|build|track|manage|ensure|save|share|publish|create|generate|reproduce|deploy|version|depend|package|environment|shortcut|type|save|research|project|analysis"
+  ],
+  "minimumRequiredPatterns": 2,
+  "minimumWordCount": 10,
+  "requireSentenceStructure": true,
+  "failureMessage": "Your step 4 answer needs a bit more detail. Please pick one tool or practice from the materials \u2014 such as a Git alias, GitHub Actions, SnakeMake, Docker, renv, Zenodo, or GitHub Pages \u2014 and write 2\u20134 sentences explaining what it does and why it might be useful for you. Your own words and your own example are what matter here."
+}

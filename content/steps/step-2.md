@@ -1,78 +1,72 @@
-## Step 2: Forks, Remotes, Branches, and Collaboration
+## Step 2: What is GitHub? Remote Repositories and Online Collaboration
 
-This step moves from core concepts to collaboration workflows.
+This step introduces GitHub — the online platform where Git-tracked projects are hosted, shared, and collaborated on.
 
-### Forks
+### What is GitHub?
 
-A fork is your own copy of a repository on GitHub.
-It allows you to experiment, learn, and contribute without directly changing the upstream repository.
+**GitHub** is a hosting and collaboration platform built around Git repositories.
+While Git runs on your local computer, GitHub provides:
 
-Your fork for this course is:
+- Online storage for your repositories
+- A web interface to browse, search, and discuss code or writing
+- Tools for collaboration such as issues, comments, and pull requests
+- Public visibility so others can find, fork, and learn from your work
 
-- `{{FORK_REPO}}`
+Other similar platforms exist — GitLab, Bitbucket, Codeberg — and they all work with the same underlying Git tool.
 
-### Keeping a fork in sync
+### GitHub repositories
 
-If the upstream repository changes, your fork can become outdated.
-You should occasionally sync it with the upstream repository so your copy stays current.
+A **repository** (often called a "repo") is the project folder that Git tracks, stored on GitHub.
 
-### Clone, remotes, pull, and push
+A common starting workflow is:
 
-- `git clone <url>`: copy a repository to your computer
-- `git remote -v`: inspect where your repository connects remotely
-- `git pull`: bring remote changes into your local repository
-- `git push`: send committed local changes to the remote repository
+1. Create a new repository on GitHub (optionally with a README, `.gitignore`, and license)
+2. Clone it to your computer with `git clone <url>`
+3. Work locally, commit changes, and push them back to GitHub
 
-### Branches
+### Fork a repository
 
-Branches let you work on a feature, experiment, or revision without disturbing the main line of development.
-That is useful for trying changes, reviewing work, and merging only when ready.
+**Forking** creates your own copy of someone else's repository on your GitHub account.
+The fork is linked to the original (upstream) so you can:
 
-### Plain text and reproducibility
+- Experiment without affecting the original
+- Contribute changes back via a pull request
+- Keep your own version of a project
 
-From your slides, an important advanced message is that Git and GitHub are not only for code.
-They also support:
+That is exactly what you did when you started this course — you forked this repository!
 
-- plain-text writing workflows
-- collaborative review
-- versioned teaching material
-- reproducible research projects
-- release and archival workflows
+### Keep your fork in sync
 
-### More advanced topics from the course
+If the upstream repository changes after you fork, your fork can fall behind.
+On GitHub, use the **Sync fork** button to bring those changes into your fork.
+On the command line:
 
-Your slides also introduce these directions for further learning:
+```
+git fetch upstream
+git merge upstream/main
+```
 
-- syncing forks and working with remotes
-- using branches for experiments
-- writing in plain text such as Markdown or LaTeX
-- using Git in IDEs such as VS Code or RStudio
-- GitHub Actions for automation
-- GitHub Pages, releases, and research dissemination
-- reproducibility links to OSF and Zenodo
+![Screenshot showing the Sync fork button on GitHub]({{IMAGE_BASE_URL}}/sync_your_fork_with_original_repository.PNG)
 
-### Next topics to learn
+### Essential remote commands
 
-After you finish this two-step foundational course, you can continue with these advanced directions from your slides and related reproducibility practice:
+- `git clone <url>`: copy a remote repository (with its full history) to your local computer
+- `git remote -v`: see where your local repository is connected remotely
+- `git pull`: bring remote changes into your local branch
+- `git push`: send your locally committed changes up to the remote repository
 
-- workflow management with SnakeMake and Targets in R
-- GitHub Actions for recurring automation tasks
-- GitHub Pages and release workflows for sharing outputs
-- R environments with `renv`
-- Python environments with `uv`
-- containerization with Docker or Podman for reproducible execution environments
-- reproducibility and archival workflows with OSF and Zenodo
+### My approach for starting a new project
 
-These topics help ensure that code, data, software environments, and analysis pipelines can be rerun and audited reliably.
+One practical workflow: create an empty repository on GitHub (with a README, `.gitignore`, and license), clone it to your computer, then add your local files and start working. This avoids the `git init` + remote-setup dance.
 
 ### Your question for step 2
 
-Please reply in this tracking issue with **2–5 full sentences in your own words**:
+Please reply in this tracking issue with **2–4 full sentences in your own words**:
 
-**Why might someone fork a repository, why might someone create a branch instead of working directly on the main branch, and name one advanced reproducibility tool or practice you want to learn next?**
+**What is GitHub and how is it different from Git? What does `git clone` do, and why would you run `git pull` before starting work on a shared project?**
 
-For the last part, pick any tool or workflow that interests you — for example SnakeMake, Docker/Podman, `renv`, `uv`, `quarto`, GitHub Actions, or Zenodo.
-Write in your own words — there is no need to quote or copy from the materials above.
+Write as if you were explaining it to a colleague who has not used Git or GitHub before.
+There is no need to quote or copy from the materials above — your own words are what matter.
 
 When you have answered, add `/done 2` to the same comment or in a new comment below.
 

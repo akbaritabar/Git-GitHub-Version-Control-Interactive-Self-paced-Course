@@ -29,13 +29,15 @@ The tracking issue is where the course advances. When a step asks you to answer 
 
 ## What the current version covers
 
-- Step 1 introduces version control, Git, GitHub, `.gitignore`, terminal basics, and essential Git commands.
-- Step 2 introduces forks, syncing, clone, pull, push, remotes, branches, and selected advanced GitHub and reproducibility topics.
+- Step 1 introduces version control, Git, why it matters, terminal basics, essential Git commands, and `.gitignore`.
+- Step 2 introduces GitHub, repositories, forking, cloning, remote commands (`pull`, `push`, `clone`, `remote -v`), and syncing forks.
+- Step 3 introduces branches, collaborative workflows, plain text for research, and connections to open science and reproducibility.
+- Step 4 introduces advanced tools: Git in editors (VS Code, RStudio), Git aliases, GitHub Pages, GitHub Actions, workflow managers (SnakeMake, Targets), reproducible environments (`renv`, `uv`, Docker), and research archiving (OSF, Zenodo).
 
 
 ## Repository structure
 
-- `content/steps/` contains the lesson text for step 1 and step 2.
+- `content/steps/` contains the lesson text for steps 1–4.
 - `images/` contains images that can be embedded in lesson markdown.
 - `.github/workflows/` contains the automation process.
 - `.github/scripts/` contains the routing and validation logic.

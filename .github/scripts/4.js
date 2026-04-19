@@ -12,7 +12,7 @@ module.exports = async function ({ github, context, core }) {
     context,
     issueNumber: context.issue.number,
     actor: context.actor,
-    stepNumber: 2
+    stepNumber: 4
   });
 
   if (!answerCheck.found) {
@@ -21,13 +21,13 @@ module.exports = async function ({ github, context, core }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: `Step 2 is not complete yet.\n\n${answerCheck.question.failureMessage}`
+      body: `Step 4 is not complete yet.\n\n${answerCheck.question.failureMessage}`
     });
     core.setOutput('validated', 'false');
     return;
   }
 
-  // === Lazy fork archive creation (fallback if 1.js could not create it) ===
+  // === Lazy fork archive creation (final fallback) ===
   let archiveIssueUrl = null;
   const archiveMetaMatch = issueBody.match(/Fork archive:\s*(\S+)/);
   const archiveMetaValue = archiveMetaMatch ? archiveMetaMatch[1] : 'pending';
@@ -69,7 +69,7 @@ module.exports = async function ({ github, context, core }) {
         body: latestBody.replace(/Fork archive:\s*\S+/, `Fork archive: ${archiveIssueUrl}`)
       });
     } catch (createErr) {
-      core.warning(`Could not create fork archive issue in step 2: ${createErr.message}`);
+      core.warning(`Could not create fork archive issue in step 4: ${createErr.message}`);
     }
   } else {
     archiveIssueUrl = archiveMetaValue;
@@ -82,7 +82,7 @@ module.exports = async function ({ github, context, core }) {
     issue_number: context.issue.number
   })).data.body || '';
 
-  const updatedBody = helpers.markChecklistItem(latestIssueBody, 2);
+  const updatedBody = helpers.markChecklistItem(latestIssueBody, 4);
   await github.rest.issues.update({
     owner: context.repo.owner,
     repo: context.repo.repo,
@@ -91,6 +91,31 @@ module.exports = async function ({ github, context, core }) {
     state: 'open'
   });
 
+  // === Post course completion message ===
+  await helpers.createComment({
+    github,
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    issue_number: context.issue.number,
+    body: [
+      'Step 4 complete. Congratulations on finishing all four steps of the Git and GitHub interactive course! 🎉',
+      '',
+      'You have worked through the full course and demonstrated understanding of:',
+      '',
+      '- Git as a version control system for tracking project history',
+      '- GitHub as a hosting and collaboration platform',
+      '- Forks, branches, pull requests, and collaborative workflows',
+      '- Advanced tools and reproducibility practices for research and software development',
+      '',
+      'Please leave a final comment in this issue with any thoughts, feedback, or questions. What was most useful? What could be improved?',
+      '',
+      'When you are ready, you can click **Close issue** (or use "Close with comment" after your last reply).',
+      '',
+      'Well done, and good luck applying these skills in your work!'
+    ].join('\n')
+  });
+
+  // === Attempt to archive step 4 teaching content in fork ===
   const variables = helpers.buildTemplateVariables({
     context,
     forkRepo,
@@ -99,28 +124,12 @@ module.exports = async function ({ github, context, core }) {
     defaultBranch
   });
 
-  const nextStep = helpers.loadStepMarkdown(3, variables);
-  await helpers.createComment({
-    github,
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    issue_number: context.issue.number,
-    body: [
-      'Step 2 complete.',
-      '',
-      'Your answer covers the GitHub concepts well. Step 3 is now unlocked and covers branches, collaboration workflows, and open science connections.',
-      '',
-      nextStep
-    ].join('\n')
-  });
-
-  // === Attempt to archive step 2 teaching content in fork ===
   try {
     if (archiveIssueUrl) {
       const urlMatch = archiveIssueUrl.match(/github\.com\/([^/]+)\/([^/]+)\/issues\/(\d+)/);
       if (urlMatch) {
         const [, archiveOwner, archiveRepo, archiveIssueStr] = urlMatch;
-        const stepContent = helpers.loadStepMarkdown(2, variables);
+        const stepContent = helpers.loadStepMarkdown(4, variables);
         const teachingContent = helpers.extractTeachingContent(stepContent);
         const completionDate = new Date().toISOString().slice(0, 10);
         await helpers.createComment({
@@ -129,20 +138,47 @@ module.exports = async function ({ github, context, core }) {
           repo: archiveRepo,
           issue_number: parseInt(archiveIssueStr, 10),
           body: [
-            '## Step 2 — GitHub: Remote Repositories and Online Collaboration',
+            '## Step 4 — Advanced Git, GitHub Tools, and Reproducibility',
             '',
             `*Archived from your course tracking issue: ${issue.html_url}*`,
-            `*Step 2 completed: ${completionDate}*`,
+            `*Step 4 completed: ${completionDate}*`,
             '',
             '---',
             '',
-            teachingContent
+            teachingContent,
+            '',
+            '---',
+            '',
+            '**Course complete!** All step materials are now archived in this issue for your personal reference.'
           ].join('\n')
         });
       }
     }
   } catch (archiveErr) {
-    core.warning(`Could not write step 2 to fork archive: ${archiveErr.message}`);
+    core.warning(`Could not write step 4 to fork archive: ${archiveErr.message}`);
+  }
+
+  // === Close enrollment issue ===
+  try {
+    const enrollmentMatch = issueBody.match(/Enrollment issue:\s*#(\d+)/);
+    if (enrollmentMatch) {
+      const enrollmentNumber = parseInt(enrollmentMatch[1], 10);
+      await github.rest.issues.createComment({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: enrollmentNumber,
+        body: `@${context.actor} has successfully completed all four steps of the Git/GitHub interactive course. This enrollment record is now closed.`
+      });
+      await github.rest.issues.update({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: enrollmentNumber,
+        state: 'closed',
+        state_reason: 'completed'
+      });
+    }
+  } catch (enrollErr) {
+    core.warning(`Could not close enrollment issue: ${enrollErr.message}`);
   }
 
   core.setOutput('validated', 'true');

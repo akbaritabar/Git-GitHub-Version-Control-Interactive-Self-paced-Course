@@ -154,8 +154,10 @@ jobs:
               'This issue tracks your progress through the course.',
               'Post your answer and the `/done N` command in a comment to advance. The workflow will reply with feedback and the next step. Please do not edit or delete the following lines.',
               '',
-              '- [ ] 1. Git, GitHub, and version control basics',
-              '- [ ] 2. Forks, remotes, branches, and collaboration'
+              '- [ ] 1. Git and version control basics',
+              '- [ ] 2. GitHub — remote repositories and online collaboration',
+              '- [ ] 3. Branches, collaboration, and open science',
+              '- [ ] 4. Advanced Git, GitHub tools, and reproducibility'
             ].join('\n');
 
             const trackingIssue = await helpers.createIssue({
