@@ -1,6 +1,14 @@
 # Interactive Course on Basics of Git, GitHub, and Version Control
 
-This repository contains a self-paced interactive course on basics of Git, GitHub, version control, and reproducible collaboration. No prior knowledge is assumed. The only requirement is to have a GitHub account. You can **Sign up here**: [https://github.com/signup?](https://github.com/signup?).
+This repository contains a self-paced interactive course on basics of Git, GitHub, version control, and reproducible collaboration. 
+
+**Instructor**: Aliakbar Akbaritabar
+
+**Affiliation**: Assistant Professor of Computational Social Science at the University of Rostock and Max Planck Institute for Demographic Research
+
+**Contact**: [https://github.com/akbaritabar](https://github.com/akbaritabar)
+
+**No prior knowledge is assumed for participation in this course.** The only requirement is to have a GitHub account. You can **Sign up here**: [https://github.com/signup?](https://github.com/signup?).
 
 Once you have created your GitHub account, you can participate in the course following the guidelines in **[How to participate](#how-to-participate)**.
 
@@ -20,6 +28,10 @@ You need to have a `GitHub` account to follow the Hands-on interactive course. *
 
 
 ## How to participate
+
+### 0) Create a GitHub account, if you do not have one.
+
+Do you have a `GitHub` account? **Sign up here**: [https://github.com/signup?](https://github.com/signup?)
 
 ### 1) Fork this repository
 
@@ -85,3 +97,8 @@ This course can be tested in a private repository if private forking is allowed 
 ## Troubleshooting
 
 If you run into problems — your personal archive is not updating, a step appears stuck, or you need to start over — see the [Frequently Asked Questions](FAQ.md) for step-by-step solutions.
+
+## Reporting problems
+
+If you noticed issues that are not documented in [Frequently Asked Questions](FAQ.md), please open a new issue and explain so that we can resolve them for the next course, go here and describe in detail, thanks: [https://github.com/akbaritabar/Git-GitHub-Version-Control-Interactive-Self-paced-Course/issues/new](https://github.com/akbaritabar/Git-GitHub-Version-Control-Interactive-Self-paced-Course/issues/new).
+
