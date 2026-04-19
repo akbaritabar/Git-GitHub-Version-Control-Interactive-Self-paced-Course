@@ -2,6 +2,7 @@
 
 This repository contains a self-paced interactive course on basics of Git, GitHub, version control, and reproducible collaboration. No prior knowledge is assumed. The only requirement is to have a GitHub account. You can **Sign up here**: [https://github.com/signup?](https://github.com/signup?).
 
+Once you have created your GitHub account, you can participate in the course following the guidelines in **[How to participate](#how-to-participate)**.
 
 ## Credits and acknowledgements
 

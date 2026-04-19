@@ -22,6 +22,7 @@ Basic branch commands:
 git branch feature-idea        # create a new branch
 git checkout feature-idea      # switch to it
 git checkout -b feature-idea   # create and switch in one command
+git checkout main               # go back to main branch
 git merge feature-idea         # merge back into main when ready
 ```
 
@@ -32,6 +33,12 @@ A **pull request** (PR) on GitHub is a formal way to propose merging one branch 
 - Discussion and review of the proposed changes
 - Automated checks (GitHub Actions)
 - A permanent record of why and how a change was made
+
+In the photo below, you can see where to find `Pull requests` on a GitHub repository:
+
+![Screenshot showing pull requests section on GitHub]({{IMAGE_BASE_URL}}/pull_requests_button.png)
+
+
 
 ### Collaboration workflow
 
@@ -74,6 +81,6 @@ Please reply in this tracking issue with **2–4 full sentences in your own word
 Write as if you were explaining it to a colleague who has not used Git or GitHub before.
 There is no need to quote or copy from the materials above — your own words are what matter.
 
-When you have answered, add `/done 3` to the same comment or in a new comment below.
+**NOTE**: When you have answered, add `/done 3` to the same comment or in a new comment below.
 
 Tracking issue: {{TRACKING_ISSUE_URL}}

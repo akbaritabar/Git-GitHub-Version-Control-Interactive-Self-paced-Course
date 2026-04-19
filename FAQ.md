@@ -16,7 +16,7 @@ The most common reason is that **Issues are not enabled in your fork**. GitHub t
 
 **How to enable Issues in your fork:**
 
-1. Go to your fork on GitHub — the URL looks like (open in a new tab so that once done you can continue the interactive course):
+1. Go to your fork on GitHub — the URL looks like (open in a new tab so that once done you can continue the interactive course in the instructor's repository):
    `https://github.com/YOUR_USERNAME/YOUR_FORK_NAME`
 2. Click the **Settings** tab at the top of the repository page
 3. Scroll down until you see the **Features** section
@@ -44,7 +44,7 @@ The cleanest way to recover is to **delete your fork and fork the repository aga
 
 > ⚠️ **This permanently deletes your fork.** Any changes you committed to your fork will be lost. Make sure you have not stored anything important there before continuing.
 
-1. Go to your fork on GitHub (open in a new tab so that once done you can continue the interactive course):
+1. Go to your fork on GitHub (open in a new tab so that once done you can continue the interactive course in the instructor's repository):
    `https://github.com/YOUR_USERNAME/YOUR_FORK_NAME`
 2. Click the **Settings** tab at the top
 3. Scroll all the way to the bottom of the page — this section is called the **Danger Zone**
@@ -110,3 +110,24 @@ The course stores important information in the body of your tracking issue (part
    - Enrollment issue: `#N`
    - Fork archive: `<url or disabled>`
    - The two checklist lines starting with `- [ ]` or `- [x]`
+
+---
+
+## Q6: I accidentally closed the tracking issue — how do I continue?
+
+**Good news: closing the issue does not break the course.**
+
+GitHub still fires comment notifications on closed issues, and the course automation listens for those events regardless of whether the issue is open or closed. The `new_participant` label is preserved when you close the issue. So the course is still fully functional.
+
+**How to continue:**
+
+1. Go to the upstream (instructor's) repository Issues tab
+2. If your issue is not visible in the default "Open" view, click **Closed** to see closed issues
+3. Find your tracking issue (titled `@YOUR_USERNAME started the Git/GitHub interactive course`)
+4. Click **Reopen issue** at the bottom of the page
+
+Once reopened, continue posting your answer and `/done N` commands exactly as before. Nothing is lost.
+
+> **Tip:** If you already have a valid answer ready, you can post it together with `/done N` even while the issue is closed. A valid answer will cause the automation to automatically reopen the issue as part of processing your step — you do not even need to reopen it manually first.
+
+**You do not need to delete your fork or restart the course.** The fork-delete approach in Q2 is only for situations where the tracking issue itself is damaged (edited body, corrupted checklist, failed workflow).
