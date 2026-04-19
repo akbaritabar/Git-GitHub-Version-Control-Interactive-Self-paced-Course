@@ -67,8 +67,8 @@ When a participant forks the repository, three GitHub objects are created automa
 
 - **Title:** `Course Materials Archive — Git/GitHub Interactive Course`
 - **Purpose:** A personal copy of course materials that the student keeps in their fork. Teaching content (not assessment questions) is added as comments after each step is completed.
-- **Created by:** `start.yml`, if Issues are enabled in the fork at the time of forking.
-- **If Issues are disabled:** The course continues normally. The tracking issue body records `Fork archive: disabled`. Students who enable Issues later can contact the instructor to have the archive created retroactively (manually).
+- **Created by:** `1.js` lazily, when step 1 is completed (by which time the student should have enabled Issues following the posted instructions). If step 1 runs and Issues are still disabled, creation is retried by `2.js`, `3.js`, and `4.js` at each subsequent completion.
+- **If Issues are disabled:** The course continues normally. The tracking issue body records `Fork archive: pending` until an archive issue is successfully created. If Issues are never enabled, no archive is created, but the course still completes. Students who finish without an archive can ask the instructor to create one manually.
 - **Step 1 content added by:** `1.js`, after a valid `/done 1` answer is accepted.
 - **Step 2 content added by:** `2.js`, after a valid `/done 2` answer is accepted.
 - **Step 3 content added by:** `3.js`, after a valid `/done 3` answer is accepted.

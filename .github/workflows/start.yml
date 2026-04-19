@@ -215,7 +215,7 @@ jobs:
                 '',
                 `![Screenshot: enabling Issues in fork settings](${imageBaseUrl}/enableIssues.png)`,
                 '',
-                '> **Please enable Issues before completing Step 1.** The archive is created automatically when you submit your first valid answer. If you enable it later, only Step 2 content will be saved.',
+                '> **Please enable Issues before completing Step 1.** The archive is created automatically when you submit your first valid answer. If you enable it later, the archive will be created when you complete the next step, and only that step and subsequent steps\' content will be saved.',
                 '',
                 '**Your progress in this tracking issue is not affected either way** — the archive is a personal reference only.',
                 '',
