@@ -109,8 +109,6 @@ module.exports = async function ({ github, context, core }) {
       '',
       'Please leave a final comment in this issue with any thoughts, feedback, or questions. What was most useful? What could be improved?',
       '',
-      'When you are ready, you can click **Close issue** (or use "Close with comment" after your last reply).',
-      '',
       'Well done, and good luck applying these skills in your work!'
     ].join('\n')
   });
