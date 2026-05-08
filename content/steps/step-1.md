@@ -54,7 +54,7 @@ You can download and install Git for:
 - **Mac** (https://git-scm.com/downloads/mac) 
 - **Linux** (https://git-scm.com/downloads/linux). 
 
-**Please note**: no GUI installation is needed. Only follow the instructions in one of those links, depending on your operating system, and install the Git software. If you were asked for Windows installation to add "context menu shortcut" and "add Git to PATH" please select "yes" for both (which is also selected by default). 
+**NOTE**: no GUI installation is needed. Only follow the instructions in one of those links, depending on your operating system, and install the Git software. If you were asked for Windows installation to add "context menu shortcut" and "add Git to PATH" please select "yes" for both (which is also selected by default). 
 
 After installing it, you can open Windows start menu and type `Git bash` or open a Terminal (which is the primary way on Mac and Linux) and type commands that will return outputs.
 

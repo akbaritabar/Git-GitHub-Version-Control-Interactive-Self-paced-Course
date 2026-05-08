@@ -12,7 +12,7 @@ After you complete each step, the course automatically saves a copy of the teach
 **Why the personal archive issue might not be updating:**
 The most common reason is that **Issues are not enabled in your fork**. GitHub turns Issues off by default in all forks, so you need to enable them manually **before you complete Step 1**. The archive issue is created automatically when you submit your first valid answer — if Issues are disabled at that moment, no archive issue is created.
 
-> **Note:** The archive is attempted again at Steps 2, 3, and 4 as a fallback. If you enabled Issues after Step 1 was already completed, completing the next step will still create the archive and save that step's content. Earlier steps' content will not be retroactively added, but you can find everything in your tracking issue.
+> **NOTE:** The archive is attempted again at Steps 2, 3, and 4 as a fallback. If you enabled Issues after Step 1 was already completed, completing the next step will still create the archive and save that step's content. Earlier steps' content will not be retroactively added, but you can find everything in your tracking issue.
 
 **How to enable Issues in your fork:**
 
@@ -25,7 +25,7 @@ The most common reason is that **Issues are not enabled in your fork**. GitHub t
 
 Once Issues is enabled, the archive will be created when you complete the next step in the instructor's repository.
 
-**Note:** The archive is a personal reference only. Your course progress in the upstream tracking issue is completely separate and is never affected by this setting.
+**NOTE:** The archive is a personal reference only. Your course progress in the upstream tracking issue is completely separate and is never affected by this setting.
 
 ---
 

@@ -147,7 +147,7 @@ module.exports = async function ({ github, context, core }) {
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number,
-      body: '> **Note:** Could not save step 1 materials to your fork archive. If you have enabled Issues in your fork, please let your instructor know. Your course progress is not affected.'
+      body: '> **NOTE:** Could not save step 1 materials to your fork archive. If you have enabled Issues in your fork, please let your instructor know. Your course progress is not affected.'
     });
   }
 

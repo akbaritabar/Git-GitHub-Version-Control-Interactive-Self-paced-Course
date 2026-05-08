@@ -76,9 +76,10 @@ GitHub Actions runs tasks automatically when you push code or open a pull reques
 
 For data analysis pipelines, workflow managers track dependencies between steps and only re-run steps whose inputs have changed:
 
-- **SnakeMake**: Python-based, widely used in bioinformatics and computational social science. Allows you to use R, Python, R, or bash scripts for your steps. Your workflow can merge these languages and while you do your data preparation in Python, statistical modelling could happen in R and all of these are orchestrated by SnakeMake to run in parallel, if a step's input is not dependent on the other.
+- **SnakeMake**: Python-based, widely used in bioinformatics (e.g., for genome sequencing) and computational social science. Allows you to use R, Python, Julia, Rust, or bash scripts for your analysis workflow steps. 
+  - NOTE: Your workflow can merge these languages and while you do your data preparation in Python, statistical modelling could happen in R and all of these are orchestrated by SnakeMake to run in parallel, if a step's input is not dependent on the other. If they do depend on each other, it runs the step in one language first, sees the exported output, and runs the next step in the other language/tool.
 - **Targets** (R): the same idea for R-based workflows
-- Both integrate naturally with version-controlled project structures
+- Both integrate naturally with version-controlled project structures as they use plain text file formats.
 
 **NOTE**: If you are interested to see an example, check out this repository which is the code, data and files here that uses **SnakeMake** workflows: [https://github.com/akbaritabar/Internal-and-international-migration-of-scientists](https://github.com/akbaritabar/Internal-and-international-migration-of-scientists) and is the replication package for our publication here `A. Akbaritabar, M.J. Dańko,X. Zhao, & E. Zagheni (2025) Global subnational estimates of migration of scientists reveal large disparities in internal and international flows, Proc. Natl. Acad. Sci. U.S.A. 122 (15) e2424521122, https://doi.org/10.1073/pnas.2424521122.`.
 

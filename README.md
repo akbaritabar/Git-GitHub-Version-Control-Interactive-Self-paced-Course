@@ -41,6 +41,8 @@ Look for the **Fork** button near the top right of this page and click it (photo
 
 GitHub will ask you to confirm where to fork. Select your own GitHub account and click **Create fork**. You will be taken to your fork — a copy of this repository now living under your own GitHub account.
 
+**NOTE**: I know some of these concepts such as `fork`, `repository`, etc. sound unfamiliar. That is alright. They will be explained by examples during the interactive course. Hopefully, by the end of this course, you have learned these concepts by practicing.
+
 ### 2) Navigate back to the instructor's repository
 
 After forking you are looking at **your fork**. Just below the repository name, GitHub shows a small line that reads:

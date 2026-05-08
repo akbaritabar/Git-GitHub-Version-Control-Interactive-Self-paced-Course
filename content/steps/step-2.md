@@ -33,7 +33,7 @@ The fork remains **linked** to the original (upstream) so you can:
 - Contribute changes back via a pull request
 - Keep your own version of a project
 
-**Note**: That is exactly what you did when you started this course! You forked this repository! Exciting!
+**NOTE**: That is exactly what you did when you started this course! You forked this repository! Exciting!
 
 ### Keep your fork in sync
 
