@@ -10,7 +10,7 @@ on:
 
 jobs:
   route:
-    if: ${{ !github.event.issue.pull_request && contains(github.event.comment.body, 'done') && contains(github.event.issue.labels.*.name, 'new_participant') }}
+    if: ${{ !github.event.issue.pull_request && contains(github.event.comment.body, 'done') && contains(github.event.issue.labels.*.name, 'newparticipant') }}
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true

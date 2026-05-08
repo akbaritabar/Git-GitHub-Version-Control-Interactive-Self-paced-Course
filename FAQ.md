@@ -72,7 +72,7 @@ The enrollment record contains a direct link to your tracking issue. Your tracki
 To find them quickly:
 - Go to the upstream repository Issues tab
 - Search for your GitHub username in the search bar
-- Or filter by the `new_participant` label
+- Or filter by the `newparticipant` label
 
 Your old (broken) tracking issue will have been automatically closed and will appear under "Closed" issues.
 
@@ -117,7 +117,7 @@ The course stores important information in the body of your tracking issue (part
 
 **Good news: closing the issue does not break the course.**
 
-GitHub still fires comment notifications on closed issues, and the course automation listens for those events regardless of whether the issue is open or closed. The `new_participant` label is preserved when you close the issue. So the course is still fully functional.
+GitHub still fires comment notifications on closed issues, and the course automation listens for those events regardless of whether the issue is open or closed. The `newparticipant` label is preserved when you close the issue. So the course is still fully functional.
 
 **How to continue:**
 

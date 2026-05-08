@@ -52,8 +52,8 @@ When a participant forks the repository, three GitHub objects are created automa
 ### Object 2 — Course tracking issue (upstream, student-facing)
 
 - **Title:** `@username started the Git/GitHub interactive course`
-- **Label:** `new_participant`
-- **Purpose:** The student's active course workspace. All `/done N` commands are posted here. The `continue.yml` workflow filters by the `new_participant` label.
+- **Label:** `newparticipant`
+- **Purpose:** The student's active course workspace. All `/done N` commands are posted here. The `continue.yml` workflow filters by the `newparticipant` label.
 - **Metadata lines in body (do not edit):**
   - Participant: `username`
   - Fork repo: `owner/repo`
@@ -185,11 +185,11 @@ In addition to adding the required secret, check these repository settings:
 2. Issues enabled in upstream repository
   - Repository Settings -> Features
   - Ensure Issues is checked.
-3. Create the `new_participant` label in the upstream repository
+3. Create the `newparticipant` label in the upstream repository
   - Go to Issues -> Labels -> New label.
-  - Set the name to exactly: `new_participant`
+  - Set the name to exactly: `newparticipant`
   - This is a hard requirement. The `continue.yml` workflow checks
-    `contains(github.event.issue.labels.*.name, 'new_participant')` before
+    `contains(github.event.issue.labels.*.name, 'newparticipant')` before
     processing any `/done N` command. If the label does not exist when the
     fork event fires, the tracking issue is created without it and the course
     will never advance, with no visible error.

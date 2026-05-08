@@ -41,14 +41,14 @@ jobs:
 
             // === Close any existing open tracking/enrollment issues for this participant ===
             // This handles the re-fork case: student deletes fork and forks again.
-            // Old tracking issues must have their new_participant label removed so
+            // Old tracking issues must have their newparticipant label removed so
             // continue.yml no longer fires on them (GitHub fires issue_comment on
             // closed issues too, so closing alone is not sufficient).
             const existingIssues = await github.paginate(github.rest.issues.listForRepo, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
-              labels: 'new_participant',
+              labels: 'newparticipant',
               per_page: 100
             });
             for (const oldIssue of existingIssues) {
@@ -57,13 +57,13 @@ jobs:
               if (!oldParticipantMatch) continue;
               if (oldParticipantMatch[1].toLowerCase() !== participant.toLowerCase()) continue;
 
-              // Remove new_participant label first to disable continue.yml routing on this issue
+              // Remove newparticipant label first to disable continue.yml routing on this issue
               try {
                 await github.rest.issues.removeLabel({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: oldIssue.number,
-                  name: 'new_participant'
+                  name: 'newparticipant'
                 });
               } catch (labelErr) {
                 core.warning(`Could not remove label from old tracking issue #${oldIssue.number}: ${labelErr.message}`);
@@ -168,7 +168,7 @@ jobs:
               repo: context.repo.repo,
               title: `@${participant} started the Git/GitHub interactive course`,
               body: trackingBody,
-              labels: ['new_participant']
+              labels: ['newparticipant']
             });
             const trackingIssueNumber = trackingIssue.data.number;
             const trackingIssueUrl = trackingIssue.data.html_url;
