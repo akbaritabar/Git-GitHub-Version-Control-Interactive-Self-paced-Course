@@ -92,9 +92,11 @@ This photo shows an example SnakeMake rule (or step) in the data processing and 
 
 Code that runs on your machine may not run on a collaborator's. Virtual environment tools solve this:
 
-- **`renv`** (R): records and restores the exact package versions used in a project
+- **`Renv`** (R): records and restores the exact R package versions used in a project
 - **`uv`** (Python): fast modern Python environment and package manager
-- **Docker / Podman**: containerise the entire computing environment so any machine can reproduce the result exactly. On Mac and Linux, this is very straightforward, on Windows, you need Windows Subsystem for Linux (WSL) to be activated to use it.
+  - **`Cookiecutter`**: In step 1, you learned that having a consistent folder structure for your projects will pay off and make it easier to start. `uv` allows you to use a tool called `Cookiecutter` which creates the project folders, ReadMe files and descriptions, according to your wishes. 
+  - Here is one example that I have set up to create new projects with the same structure with a few terminal commands using uv and Cookiecutter: [https://github.com/akbaritabar/cookiecutter_projects_template](https://github.com/akbaritabar/cookiecutter_projects_template)
+- **`Docker / Podman`**: containerise the entire computing environment so any machine can reproduce the result exactly. On Mac and Linux, this is very straightforward, on Windows, you need Windows Subsystem for Linux (WSL) to be activated to use it.
 
 **NOTE**: These will hopefully save you from having to say (or hear): *It works on my computer!*
 
@@ -130,7 +132,7 @@ Here is an example of a Zenodo repository sharing code, data and materials for t
 
 Please reply in this tracking issue with **2–4 full sentences in your own words**:
 
-**Pick one tool or practice from this step — for example a Git alias, GitHub Actions, SnakeMake, Docker, `renv`, Zenodo, or GitHub Pages — and explain briefly what it does and how it could help your own work or research.**
+**Pick one tool or practice from this step — for example a Git alias, GitHub Actions, SnakeMake, Docker, Renv, Zenodo, or GitHub Pages — and explain briefly what it does and how it could help your own work or research.**
 
 Write in your own words. There is no need to quote or copy from the materials above.
 
