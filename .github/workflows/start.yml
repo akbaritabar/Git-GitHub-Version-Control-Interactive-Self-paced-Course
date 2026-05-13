@@ -152,7 +152,7 @@ jobs:
               `Fork archive: pending`,
               '',
               'This issue tracks your progress through the course.',
-              'Post your answer and the `/done N` command in a comment to advance. The workflow will reply with feedback and the next step. Please do not edit or delete the following lines.',
+              'Post your answer and the `/done N` command in a comment to advance. Use `/done N` in a new line after your answer, with space between `/done` and N, where N is the step number. The workflow will reply with feedback and the next step. Please do not edit or delete the following lines.',
               '',
               '> ⚠️ **Please keep this issue open.** Do not click "Close issue". If you accidentally close it, simply reopen it — no progress is lost and the course continues from exactly where you left off.',
               '',

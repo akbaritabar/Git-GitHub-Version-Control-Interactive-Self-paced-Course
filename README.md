@@ -67,7 +67,7 @@ Make sure the username in the title matches **your own** — each participant ha
 
 ### 4) Answer questions and advance through the steps
 
-The tracking issue is where the course advances. When a step asks you to answer a question, reply by adding a **comment** in the tracking issue. When you are ready to be checked, include `/done 1` (or `/done 2`, `/done 3`, `/done 4`) in your comment. Your written answer and the `/done N` command can be in the same comment or in two separate ones.
+The tracking issue is where the course advances. When a step asks you to answer a question, reply by adding a **comment** in the tracking issue. When you are ready to be checked, include `/done 1` in your comment (**in a new line**, with space between `/done` and the number, e.g., `/done 1`, `/done 2`, `/done 3`). Your written answer and the `/done N` command can be in the same comment, starting on a new line, or in two separate ones.
 
 The automated workflow will reply with feedback. If your answer covers the required ideas, the next step will be posted as a new comment automatically. If your answer does not suffice, you will receive a new reply with further guidelines on how to retry.
 

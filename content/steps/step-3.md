@@ -81,6 +81,6 @@ Please reply in this tracking issue with **2–4 full sentences in your own word
 Write as if you were explaining it to a colleague who has not used Git or GitHub before.
 There is no need to quote or copy from the materials above — your own words are what matter.
 
-**NOTE**: When you have answered, add `/done 3` to the same comment or in a new comment below.
+**NOTE**: When you have answered, add `/done 3` to the same comment (Use `/done N` in a new line after your answer, with space between `/done` and N, where N is the step number) or in a new comment below.
 
 Tracking issue: {{TRACKING_ISSUE_URL}}

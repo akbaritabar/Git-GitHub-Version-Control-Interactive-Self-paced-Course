@@ -53,7 +53,7 @@ module.exports = async function ({ github, context }) {
         body: [
           'Your comment mentions "done" but does not use the required format.',
           '',
-          `Use \`/done N\` where N is a step number between 1 and ${max}.`
+          `Use \`/done N\` in a new line after your answer, with space between \`/done\` and N, where N is a step number between 1 and ${max}.`
         ].join('\n')
       });
     }
