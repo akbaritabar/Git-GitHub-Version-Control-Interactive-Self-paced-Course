@@ -53,7 +53,7 @@ GitHub Pages turns a repository into a hosted website. Common uses:
 - Personal or project websites.
     - For example, see Aliakbar Akbaritabar' website and portfolio here [https://akbaritabar.github.io/](https://akbaritabar.github.io/) which depends on GitHub actions that are being run on this repository to operate [https://github.com/akbaritabar/akbaritabar.github.io](https://github.com/akbaritabar/akbaritabar.github.io). 
     - Each time I create a new page, update my CV or add new files, do `git commit` and send my changes to repository using `git push`, it triggers GitHub actions and the website is updated (see photo below).
-- Documentation for a code package
+- Documentation for a code package, or repository. For example, this course's ReadMe page could be seen here [https://akbaritabar.github.io/Git-GitHub-Version-Control-Interactive-Self-paced-Course/](https://akbaritabar.github.io/Git-GitHub-Version-Control-Interactive-Self-paced-Course/)
 - Slide decks compiled from Markdown or HTML
 
 The photo below shows my personal website (left) as an example that is using the codes in a GitHub repository (right) and each commit triggers GitHub actions and updates the website.
