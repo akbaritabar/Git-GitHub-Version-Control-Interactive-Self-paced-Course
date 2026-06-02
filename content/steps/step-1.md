@@ -8,7 +8,7 @@ A common problem in research and collaborative writing is ending up with many fi
 
 - `paper_final.docx`
 - `paper_final_revised.docx`
-- `paper_final_revised_JS_2026-04-18.docx`
+- `paper_final_revised_AA_2026-04-18.docx`
 - `paper_REAL_final.docx`
 
 That workflow becomes hard to search, hard to merge, and hard to trust.
@@ -88,12 +88,12 @@ Before practicing Git commands you need a command-line interface (Terminal, Git 
 - `git add <file>`: stage changes for the next commit
 - `git commit -m "message"`: record staged changes in history
 - `git log`: inspect commit history
-- `git diff --color-words`: inspect word-level changes before or after staging
+- `git diff --color-words`: inspect word-level changes before or after staging (by adding `--cached` argument after a space) for all files or specific ones (by adding `file name`)
 
 ### What is `.gitignore`?
 
 A `.gitignore` file tells Git which files or patterns should **not** be tracked.
-This is useful for generated files, logs, temporary files, secrets, and machine-specific clutter.
+This is useful for generated files, logs, temporary files, secrets, username and passwords, and machine-specific clutter.
 
 Examples:
 
@@ -104,7 +104,7 @@ Examples:
 
 A good habit is to set up your `.gitignore` early so you never accidentally commit sensitive credentials or large generated files.
 
-To create it, you right click and open a simple text file and replace its name, e.g., `new file.txt` with `.gitignore` (note: no name is added, and just an extension is used). You can open it with text editor like notepad and add patterns of files/folders to exclude.
+To create it, you right click and open a simple text file and replace its name, e.g., `new file.txt` with `.gitignore` (note: no name is added, and just an extension is used). You can open it with a text editor like notepad and add patterns of files/folders to exclude. See this course repository for an example of such a file.
 
 ### Keeping a clear project folder structure
 
@@ -122,7 +122,7 @@ Here is an example of structure that I use often and a description is below what
 - `code`: R, Python, SQL, etc scripts allowing to run different steps. One would normally want all scripts in this folder to be version controlled using git to allow seeing what changed, when, by whom, and why.
 - `inputs`: raw or unprocessed data files live here. We use code to process them (see the next point)
 - `outputs`: processed data files are here. We use scripts in `code` folder to modify the `inputs` and save the resulting data files in `outputs`. Redoing the process is easy by re-running scripts in `code` and nothing is lost as we do not save any processed files under `inputs`.
-- `figures`: visualizations files in PDF, PNG and other formats could be saved here. This makes it easier to find them but of course, these could be in a sub-folder under `outputs`, if needed.
+- `figures`: visualization files in PDF, PNG and other formats could be saved here. This makes it easier to find them but of course, these could be in a sub-folder under `outputs`, if needed.
 - `writing backup`: here we can keep a backup of our writing and manuscript in plain text format (in case they are hosted online in an OverLeaf instance and so on, more on this below) which could read and use visualizations from `figures` folder.
 
 If you are excited to learn more about how to use a `cookiecutter` tool for new projects and create the same folder structure over and over, I would recommend checking this repository where I use `cookiecutter` to recreate this folder structure for new projects: [https://github.com/akbaritabar/cookiecutter_projects_template](https://github.com/akbaritabar/cookiecutter_projects_template).
