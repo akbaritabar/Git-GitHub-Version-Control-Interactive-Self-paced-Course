@@ -11,11 +11,11 @@ This step introduces GitHub, i.e., the online platform where Git-tracked project
 - Tools for collaboration such as issues, comments, and pull requests
 - Public visibility so others can find, fork, and learn from your work
 
-Other similar platforms exist, e.g., GitLab, Bitbucket, Codeberg, and they all work with the same underlying Git tool.
+Other similar platforms exist, e.g., GitLab, Bitbucket, Codeberg, and they all work with the same underlying Git tool. So you can directly transfer what you are learning here and use with those platforms. Some universities and institutes provide their self-hosted instances of GitLab and similar, e.g., here is [University of Rostock's GitLab: gitlab.uni-rostock.de](gitlab.uni-rostock.de).
 
 ### GitHub repositories
 
-A **repository** (often called a "repo") is the project folder that Git tracks, stored on GitHub.
+A **repository** (often called a "repo") is the project folder that Git tracks, stored locally and pushed on GitHub as a `remote` hosting for it.
 
 A common starting workflow is:
 
